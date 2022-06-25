@@ -28,8 +28,7 @@ class _StatepagTranslation extends State<PageTranslation> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Colors.deepPurple[900]?.withOpacity(0.9),
-          title: const Text("Translation"),
+          title: const Text("Traductor"),
         ),
         body: Container(
           margin: const EdgeInsets.only(right: 15, left: 15),
