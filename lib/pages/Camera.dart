@@ -1,9 +1,14 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:intl/intl.dart';
+
+import '../services/appState.dart';
 
 class Camera extends StatefulWidget {
   @override
@@ -11,6 +16,7 @@ class Camera extends StatefulWidget {
 }
 
 class _CameraState extends State<Camera> {
+  final user = FirebaseAuth.instance.currentUser!;
   File? _pickedImage;
   bool imgExits = false;
   late String url;
@@ -23,11 +29,24 @@ class _CameraState extends State<Camera> {
       if (pickedImage == null) return;
 
       final pickedImageFile = File(pickedImage.path);
+      
+      //guardado en la base
+        String urlImagen = pickedImage.name;
+        final ref =
+            FirebaseStorage.instance.ref().child('ImgCamera').child(urlImagen);
 
-      setState(() {
-        _pickedImage = pickedImageFile;
-        imgExits = true;
-      });
+        setState(() {
+          _pickedImage = pickedImageFile;
+          imgExits = true;
+        });
+        await ref.putFile(_pickedImage!);
+        url = await ref.getDownloadURL();
+        DateTime date = DateTime.now();
+        DateFormat formatter =DateFormat('yyyy-MM-dd');
+        String fecha = formatter.format(date);
+        String hora = date.hour.toString();
+        bool result = await AppState().saveImagenes(user.email!, url, fecha, hora);
+              
       getRecognisedText(pickedImage);
     } on PlatformException catch (e) {
       print("Fasho $e");
@@ -193,4 +212,5 @@ class textScan extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Text(texto))));
   }
+
 }

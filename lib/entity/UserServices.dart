@@ -101,7 +101,7 @@ class UserServices {
     }
   }
 
- Future<bool> editarNotas(String key,String tema,String subtema, String contenido) async{
+  Future<bool> editarNotas(String key,String tema,String subtema, String contenido) async{
     try {
       String name = "TopicNote/" + tema;
       Map<String, String> value = {'SubTema': subtema, 'Contenido': contenido};
@@ -203,6 +203,21 @@ class UserServices {
       return lisCamera;
     }catch (e){
       return lisCamera;
+    }
+  }
+
+  Future saveImagenes(String email, String img, String fecha, String hora) async{
+    try {
+      await FirebaseDatabase.instance.ref().child('ImgCamera').push().set({        
+          'Email': email,
+          'IMG': img,
+          'Fecha': fecha,
+          'Hora': hora +'h'
+        });
+      return true;
+    } catch (e) {
+      print("este fue el erro $e");
+      return false;
     }
   }
 
