@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "33455707324",
+    "project_id": "english-anote",
+    "storage_bucket": "english-anote.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33455707324:android:1e42bb255308286658acb9",
+        "android_client_info": {
+          "package_name": "com.fastlearning.fastenglish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "33455707324-ubh0moqh2rh73fd2duksbrbifh6mkg6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZFH8jRqAq8cgxLkrFR3r_ncRkr5d6CZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "33455707324-ubh0moqh2rh73fd2duksbrbifh6mkg6h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

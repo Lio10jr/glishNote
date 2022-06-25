@@ -1,0 +1,14 @@
+[
+  {
+    "USO": "Para acciones que ocurrieron en el pasado.\nHablar de cosas que ya no ocurren o que ocurren en el presente.",
+    "AFFIRMATIVE": "Subject + Verb (-d, -ed) / Verb (past) + Complement",
+    "INFOA": "La '-d' se añade al final del verbo cuando su letra es la 'e': Close - Cerrado.\nLa '-ed' es la terminación que se utiliza en los verbos que terminan en consonante o en y.",
+    "EXAMPLEA": "The game ended 10 minutes ago.\nI saw a ghost last Friday.",
+    "NEGATIVE": "Subject + did not (didn't) + Verb in Basic Form + Complement",
+    "INFON": "Uso del auxiliar do/does, para la conjugación en pasado, mientras el verbo permanece en forma de infinitivo.",
+    "EXAMPLEN": "She didn't work yesterday.\nThey didn’t do it.",
+    "INTERROGATIVE": "Did + Subject + Verb in Basic Form + Complement",
+    "INFOI": "Utilizamos Did para las preguntas en las que el verbo es regular.",
+    "EXAMPLEI": "Where did you buy those chocolates?\nDid she go to the Paris in the October of 2002?"
+  }
+]
