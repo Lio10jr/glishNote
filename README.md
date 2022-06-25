@@ -1,6 +1,19 @@
 # fastenglish
 
-Aprender Ingles Rapido :)
+Aplicacion movil para tomar apuntes de ingles
+El ingles es un caso especial para algunos que siempre se debe tomar apuntes para recordar palabras, verbos y usos epeciales.
+
+Caracteristicas:
+- Contiene temas del uso del pasado, presente y futuro, los cuales contienen puedes llevar un registro de apuntes que relizes en ellos.
+- Lista de verbos emas de 300, cada uno con su definicion, en pasado simple, tercera persona, pasado participio y Gerundio. Contiene un buscador de verbos en forma base.
+- Tabla de vocabulario, con parametros en español, ingles y pronunciacion. Se puede agregar, eliminar y buscar palabra en ingles.
+- Traductor con una capacidad de 500 letras y sin limites de lineas, traduce de ingles a español y español a ingles. Puede borra el contenido escrito totalmente, y puede copiar el contenido traducido
+- Camara: Toma foto y obtiene foto de su galeria para asi convertir la imagen a texto para ser copiada, tambien puede eliminar la imagen.
+- Informacion de usuario, nombre de usuario, email, foto de perfil
+- login y Registro:
+    - Facebook
+    - Correo
+- Modo Oscuro
 
 ## Getting Started
 
