@@ -116,9 +116,9 @@ class AppState with ChangeNotifier {
   }
   
   
-  Future<List<ImgCamera>> obtenerImgCamera(String email, String img) async{
+  Future<List<ImgCamera>> obtenerImagenes(String email) async{
     try{
-      _ImgsCamera = await UserServices().getImgCamera(email, img);
+      _ImgsCamera = await UserServices().getImagenes(email);
       return _ImgsCamera;
     }catch (e){
       return _ImgsCamera;

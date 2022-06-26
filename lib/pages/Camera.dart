@@ -21,6 +21,7 @@ class _CameraState extends State<Camera> {
   bool imgExits = false;
   late String url;
   String scannedText = "";
+  XFile? _imgBD;
 
   Future _pickCamera() async {
     try {
@@ -29,27 +30,16 @@ class _CameraState extends State<Camera> {
       if (pickedImage == null) return;
 
       final pickedImageFile = File(pickedImage.path);
-      
-      //guardado en la base
-        String urlImagen = pickedImage.name;
-        final ref =
-            FirebaseStorage.instance.ref().child('ImgCamera').child(urlImagen);
-
+ 
         setState(() {
+          _imgBD = pickedImage;
           _pickedImage = pickedImageFile;
           imgExits = true;
         });
-        await ref.putFile(_pickedImage!);
-        url = await ref.getDownloadURL();
-        DateTime date = DateTime.now();
-        DateFormat formatter =DateFormat('yyyy-MM-dd');
-        String fecha = formatter.format(date);
-        String hora = date.hour.toString();
-        bool result = await AppState().saveImagenes(user.email!, url, fecha, hora);
               
       getRecognisedText(pickedImage);
     } on PlatformException catch (e) {
-      print("Fasho $e");
+      print("Error al obtener imagen de camara. $e");
     }
   }
 
@@ -67,7 +57,7 @@ class _CameraState extends State<Camera> {
       });
       getRecognisedText(pickedImage);
     } on PlatformException catch (e) {
-      print("Fasho  $e");
+      print("Error al obtener imagen de galeria. $e");
     }
   }
 
@@ -79,6 +69,19 @@ class _CameraState extends State<Camera> {
     });
   }
 
+Future _pickGuardado() async{
+    String urlImagen = _imgBD!.name;
+    final ref =
+           FirebaseStorage.instance.ref().child('ImgCamera').child(urlImagen);
+
+    await ref.putFile(_pickedImage!);
+        url = await ref.getDownloadURL();
+        DateTime date = DateTime.now();
+        DateFormat formatter =DateFormat('yyyy-MM-dd');
+        String fecha = formatter.format(date);
+        String hora = date.hour.toString();
+        await AppState().saveImagenes(user.email!, url, fecha, hora);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,6 +99,7 @@ class _CameraState extends State<Camera> {
                     backgroundColor:
                         MaterialStateProperty.all(Colors.greenAccent)),
                 onPressed: (){
+                  _pickGuardado();
                   Navigator.push(context,
                           MaterialPageRoute(builder: (context) => textScan( texto: scannedText,)));
                 },
@@ -179,10 +183,17 @@ class _CameraState extends State<Camera> {
   }
 }
 
-class textScan extends StatelessWidget {
+// ignore: camel_case_types
+class textScan extends StatefulWidget {
   String texto;
-  textScan({required this.texto});
+  textScan({Key? key, required this.texto}) : super(key: key);
 
+  @override
+  State<textScan> createState() => _textScanState();
+}
+
+// ignore: camel_case_types
+class _textScanState extends State<textScan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,7 +207,7 @@ class textScan extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.all(Colors.red),
                 ),
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: texto));
+                    Clipboard.setData(ClipboardData(text: widget.texto));
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("Copiado con exito!", style: TextStyle(color: Colors.black),),
                       backgroundColor: Colors.white,
@@ -210,7 +221,6 @@ class textScan extends StatelessWidget {
         ),
         body: SingleChildScrollView(child: Padding(
           padding: const EdgeInsets.all(10),
-          child: Text(texto))));
+          child: Text(widget.texto))));
   }
-
 }

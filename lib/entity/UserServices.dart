@@ -183,21 +183,23 @@ class UserServices {
     }
   }
 
-  Future<List<ImgCamera>> getImgCamera(String email, String img) async{
-    String name = "ImgCamera/"+ email;
+  Future<List<ImgCamera>> getImagenes(String email) async{
     List<ImgCamera> lisCamera= [];
     try{
       DatabaseReference ref = FirebaseDatabase.instance.ref();
-      final snapshot = await ref.child(name).get();
+      final snapshot = await ref.child('ImgCamera').get();
       if (snapshot.exists) {
         for(DataSnapshot sn in snapshot.children){
-          ImgCamera ovn = ImgCamera(
-            key: sn.key.toString(),
-            email: sn.child('Email').value.toString(),
-            img: sn.child('Img').value.toString(),
-            fecha: sn.child('Fecha').value as DateTime,
+          if(email == sn.child('Email').value.toString()){
+            ImgCamera ovn = ImgCamera(
+              key: sn.key.toString(),
+              email: sn.child('Email').value.toString(),
+              img: sn.child('IMG').value.toString(),
+              fecha: sn.child('Fecha').value.toString(),
+              hora: sn.child('Hora').value.toString()
             );
             lisCamera.add(ovn); 
+          }          
         }
       } 
       return lisCamera;
@@ -216,7 +218,6 @@ class UserServices {
         });
       return true;
     } catch (e) {
-      print("este fue el erro $e");
       return false;
     }
   }

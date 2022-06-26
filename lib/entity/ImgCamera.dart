@@ -3,10 +3,12 @@ class ImgCamera {
       {required this.key,
       required this.email,
       required this.img,
-      required this.fecha});
+      required this.fecha,
+      required this.hora});
 
   String key;
   String email;
   String img;
-  DateTime fecha;
+  String fecha;
+  String hora;
 }
