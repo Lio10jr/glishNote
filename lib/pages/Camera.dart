@@ -52,6 +52,7 @@ class _CameraState extends State<Camera> {
       final pickedImageFile = File(pickedImage.path);
 
       setState(() {
+        _imgBD = pickedImage;
         _pickedImage = pickedImageFile;
         imgExits = true;
       });
@@ -70,17 +71,20 @@ class _CameraState extends State<Camera> {
   }
 
 Future _pickGuardado() async{
+  if(scannedText.isNotEmpty){
     String urlImagen = _imgBD!.name;
     final ref =
            FirebaseStorage.instance.ref().child('ImgCamera').child(urlImagen);
-
+          
     await ref.putFile(_pickedImage!);
         url = await ref.getDownloadURL();
         DateTime date = DateTime.now();
         DateFormat formatter =DateFormat('yyyy-MM-dd');
         String fecha = formatter.format(date);
         String hora = date.hour.toString();
-        await AppState().saveImagenes(user.email!, url, fecha, hora);
+        await AppState().saveImagenes(user.email!, urlImagen, url, fecha, hora, scannedText);
+  }
+    
   }
   @override
   Widget build(BuildContext context) {

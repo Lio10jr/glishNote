@@ -15,28 +15,6 @@ import 'package:flutter/services.dart';
 
 const IconData facebook = IconData(0xe255, fontFamily: 'MaterialIcons');
 
-
-//PagHome de inicio
-// class MyHome extends StatelessWidget {
-//    const MyHome({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetMaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       initialRoute: '/',
-//       getPages: [
-//         GetPage(name: '/', page: () => const Principal()),
-//         GetPage(name: '/principalSession', page: () => const PrincipalSession()),
-//         GetPage(name: '/session', page: () => login()),
-//         GetPage(name: '/SignUp', page: () => const registerAuth()),
-//         GetPage(name: '/Vocabulary', page: () => const registerAuth()),
-//       ],
-//     );
-//   }
-// }
-
-
 //PagSecundaria con sesion iniciada
 class PrincipalSession extends StatefulWidget {
   const PrincipalSession({Key? key}) : super(key: key);

@@ -103,9 +103,9 @@ class AppState with ChangeNotifier {
     }
   }
 
-  Future<bool> saveImagenes( String email, String img, String fecha, String hora ) async {
+  Future<bool> saveImagenes( String email, String img,String imgurl, String fecha, String hora, String nota ) async {
     try {
-      bool respuesta = await UserServices().saveImagenes(email, img, fecha, hora);
+      bool respuesta = await UserServices().saveImagenes(email, img, imgurl, fecha, hora, nota);
       if(respuesta) {
         notifyListeners();
       }
@@ -122,6 +122,18 @@ class AppState with ChangeNotifier {
       return _ImgsCamera;
     }catch (e){
       return _ImgsCamera;
+    }
+  }
+
+  Future<bool> eliminarImagenes(String email, String fecha) async{
+    try {
+      bool respuesta = await UserServices().eliminarImagenes(email, fecha);
+      if(respuesta) {
+        notifyListeners();
+      }
+      return respuesta;
+    } catch (e) {
+      return false;
     }
   }
 }
