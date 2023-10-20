@@ -29,7 +29,7 @@ class _grammarState extends State<Grammar> {
           height: Size.infinite.height,
           width: Size.infinite.width,
           child: FutureBuilder(
-              future: ReadJsonDataCT(),
+              future: readJsonDataCT(),
               builder: (context, data) {
                 if (data.hasError) {
                   return Center(child: Text("${data.error}"));

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:fastenglish/entity/ImgCamera.dart';
 import 'package:fastenglish/pages/Camera.dart';
 import 'package:fastenglish/services/appState.dart';
@@ -10,10 +8,10 @@ import 'package:intl/intl.dart';
 
 class ContentRecent extends StatefulWidget {
   @override
-  _ContentRecentState createState() => _ContentRecentState();
+  contentRecentState createState() => contentRecentState();
 }
 
-class _ContentRecentState extends State<ContentRecent> {
+class contentRecentState extends State<ContentRecent> {
   final user = FirebaseAuth.instance.currentUser!;
   List<ImgCamera> listImg = [];
   String? scannedText;

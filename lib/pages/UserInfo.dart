@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:fastenglish/dark_theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -25,7 +24,6 @@ class _UserInfoState extends State<UserInfo> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(() {
@@ -91,8 +89,7 @@ class _UserInfoState extends State<UserInfo> {
                                 decoration: BoxDecoration(
                                     boxShadow: const [
                                       BoxShadow(
-                                          color: Colors.white,
-                                          blurRadius: 1.0),
+                                          color: Colors.white, blurRadius: 1.0),
                                     ],
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
@@ -158,37 +155,28 @@ class _UserInfoState extends State<UserInfo> {
                       onTap: () async {
                         showDialog(
                             context: context,
-                            builder: (BuildContext ctx) {
-                              return AlertDialog(
-                                title: Row(
-                                  children: const [
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text('Cerra Sesion'),
-                                    )
-                                  ],
-                                ),
-                                content: const Text(
-                                    '¿Estas seguro de cerrar la session?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () async {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Cancelar'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {
-                                      FirebaseAuth.instance.signOut();
-                                    },
-                                    child: const Text(
-                                      'Si',
-                                      style: TextStyle(color: Colors.red),
+                            builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Cerra Sesión'),
+                                  content: const Text(
+                                      '¿Estas seguro de cerrar la sesión?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Cancel'),
+                                      child: const Text('Cancelar', style: TextStyle(color: Colors.black),),
                                     ),
-                                  ),
-                                ],
-                              );
-                            });
+                                    TextButton(
+                                      onPressed: () async {
+                                        FirebaseAuth.instance.signOut();
+                                        Navigator.pop(context, 'OK');
+                                      },
+                                      child: const Text(
+                                        'Si',
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    ),
+                                  ],
+                                ));
                       },
                       title: const Text(
                         'Cerrar Session',

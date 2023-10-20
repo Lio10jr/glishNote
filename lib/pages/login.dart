@@ -1,18 +1,13 @@
-import 'dart:ui';
 import 'package:email_validator/email_validator.dart';
-import 'package:fastenglish/main.dart';
 import 'package:fastenglish/pages/RestablecerContra.dart';
 import 'package:fastenglish/pages/register.dart';
-import 'package:fastenglish/pages/verificarEmailPage.dart';
-import 'package:fastenglish/services/appState.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:get/get.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
+
+import '../services/userState.dart';
 
 class login extends StatefulWidget {
   @override
@@ -46,7 +41,6 @@ class _StateLogin extends State<login> {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             WaveWidget(
@@ -81,25 +75,27 @@ class _StateLogin extends State<login> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                            color: Colors.amber.shade100,
                             borderRadius: BorderRadius.circular(5)),
                         child: TextFormField(
                           controller: _textCorreoController,
                           maxLines: 1,
-                          cursorHeight: 25,
+                          cursorHeight: 20,
                           cursorColor: Colors.red,
-                          decoration: const InputDecoration(
-                            labelText: " E-mail",
+                          decoration: InputDecoration(                            
+                            labelText: "Correo",
+                            contentPadding: const EdgeInsets.only(left: 16.0, top: 5.0),
                             labelStyle:
-                                TextStyle(fontSize: 15.0, color: Colors.black),
+                                const TextStyle(fontSize: 15.0, color: Colors.black,),
                             suffixIcon:
-                                Icon(Icons.email_outlined, color: Colors.purple),
+                                const Icon(Icons.email_outlined, color: Colors.purple),
                             border: InputBorder.none,
+                            filled: true,
+                            fillColor: Colors.amber[100],
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (email) =>
                               email != null && !EmailValidator.validate(email)
-                                  ? 'Ingrese un E-mail valido'
+                                  ? 'Ingrese un Correo valido'
                                   : null,
                         ),
                       ),
@@ -108,23 +104,26 @@ class _StateLogin extends State<login> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                            color: Colors.amber.shade100,
                             borderRadius: BorderRadius.circular(5)),
                         child: TextFormField(
                           controller: _textContraController,
                           maxLines: 1,
                           cursorColor: Colors.red,
                           obscureText: true,
-                          cursorHeight: 25,
-                          decoration: const InputDecoration(
-                            labelText: " Contraseña",
+                          cursorHeight: 20,
+                          decoration:  InputDecoration(
+                            labelText: "Contraseña",
+                            contentPadding: const EdgeInsets.only(left: 16.0, top: 5.0),
                             labelStyle:
-                                TextStyle(fontSize: 15.0, color: Colors.black),
-                            suffixIcon: Icon(Icons.lock_outline_rounded,
+                                const TextStyle(fontSize: 15.0, color: Colors.black),
+                            suffixIcon: const Icon(Icons.lock_outline_rounded,
                                 color: Colors.purple),
                             border: InputBorder.none,
+                            filled: true,
+                            fillColor: Colors.amber[100],
                           ),
                         ),
+                        
                       ),
                       const SizedBox(
                         height: 20,
@@ -137,7 +136,6 @@ class _StateLogin extends State<login> {
                             style: TextStyle(color: Colors.black, fontSize: 13),
                           ),
                           TextButton(
-                            //onPressed:() => Get.toNamed("/SignUp"),
                             onPressed: () => {
                               Navigator.push(
                                 context,
@@ -185,8 +183,8 @@ class _StateLogin extends State<login> {
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 50),
-                        child: Row(
-                          children: const [
+                        child: const Row(
+                          children:  [
                             Expanded(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -249,20 +247,18 @@ class _StateLogin extends State<login> {
       );
     } on FirebaseAuthException catch (e) {
       print(e);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-          e.message.toString(),
-          style: const TextStyle(color: Colors.red),
+          "Credenciales incorrectas.",
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.red,
       ));
     }
   }
 
   Future _signFaceboock() async{
     try{  
-      DatabaseReference ref = FirebaseDatabase.instance.ref("Users");
-      
       final faceLogin = await FacebookAuth.instance.login();
       final userData = await FacebookAuth.instance.getUserData();
 
@@ -270,21 +266,19 @@ class _StateLogin extends State<login> {
       await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
       
-      String UserName= userData['name'].toString();
+      String userName= userData['name'].toString();
       String email= userData['email'].toString();
       String image= userData['picture']['data']['url'].toString();
-      AppState().saveUsers(UserName, email, image);
-      
-      
+      userState().saveUsers(userName, email, image); 
 
     }on FirebaseAuthException catch (e) {
       print(e.message.toString());
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-          e.message.toString(),
-          style: const TextStyle(color: Colors.red),
+          "Ocurrio un Error al iniciar con Facebook",
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.red,
       ));
     }
   }

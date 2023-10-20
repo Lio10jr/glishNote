@@ -129,60 +129,7 @@ class UserServices {
     } catch (e) {
       return false;
     }
-  }
-
-  Future saveUsersSer(String username, String email, String imag) async {
-    try {
-      String name = "Users";
-      bool resul = false;
-
-      DatabaseReference ref = FirebaseDatabase.instance.ref();
-      final snapshot = await ref.child(name).get();
-      if (!snapshot.exists) {
-        await FirebaseDatabase.instance
-            .ref()
-            .child("Users")
-            .push()
-            .set({'UserName': username, 'Email': email, 'ImagenUrl': imag});
-      } else {
-        await getUser(email).then((value) {
-          resul = value;
-        });
-        if (!resul) {
-          await FirebaseDatabase.instance
-              .ref()
-              .child("Users")
-              .push()
-              .set({'UserName': username, 'Email': email, 'ImagenUrl': imag});
-        }
-      }
-
-      return true;
-    } catch (e) {
-      print(e);
-      return false;
-    }
-  }
-
-  Future<bool> getUser(String email) async {
-    String name = "Users";
-    bool result = false;
-    try {
-      DatabaseReference ref = FirebaseDatabase.instance.ref();
-      final snapshot = await ref.child(name).get();
-
-      if (snapshot.exists) {
-        for(DataSnapshot sn in snapshot.children){
-          if(email ==sn.child('Email').value){
-            return result = true;
-          }      
-        }
-      } 
-      return result;
-    } catch (e) {
-      return result;
-    }
-  }
+  }  
 
   Future<List<ImgCamera>> getImagenes(String email) async{
     List<ImgCamera> lisCamera= [];

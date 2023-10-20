@@ -53,7 +53,7 @@ class _MyverbsViewPageState extends State<verbsView> {
             ),
           ),
           body: FutureBuilder(
-            future: ReadJsonData(),
+            future: readJsonData(),
             builder: (context, data) {
               if (data.hasError) {
                 return Center(child: Text("${data.error}"));

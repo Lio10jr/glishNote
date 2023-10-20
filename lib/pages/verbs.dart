@@ -64,7 +64,7 @@ class _MyHomePageState extends State<verbs> {
           ),
 
         body: FutureBuilder(
-          future: ReadJsonData(),
+          future: readJsonData(),
           builder: (context,data){
             if(data.hasError){
               return Center(child: Text("${data.error}"));

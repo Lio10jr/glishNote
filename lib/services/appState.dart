@@ -91,17 +91,7 @@ class AppState with ChangeNotifier {
     }
   }
 
-  Future<bool> saveUsers( String username, String email, String imag ) async {
-    try {
-      bool respuesta = await UserServices().saveUsersSer(username, email, imag);
-      if(respuesta) {
-        notifyListeners();
-      }
-      return respuesta;
-    } catch (e) {
-      return false;
-    }
-  }
+  
 
   Future<bool> saveImagenes( String email, String img,String imgurl, String fecha, String hora, String nota ) async {
     try {
@@ -114,7 +104,6 @@ class AppState with ChangeNotifier {
       return false;
     }
   }
-  
   
   Future<List<ImgCamera>> obtenerImagenes(String email) async{
     try{

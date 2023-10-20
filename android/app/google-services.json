@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "33455707324",
+    "firebase_url": "https://english-anote-default-rtdb.firebaseio.com",
     "project_id": "english-anote",
     "storage_bucket": "english-anote.appspot.com"
   },

@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:fastenglish/pages/Grammar.dart';
 import 'package:fastenglish/pages/verbs.dart';
 import 'package:fastenglish/pages/vocabulary.dart';
@@ -29,16 +28,15 @@ class _StateAllPageView extends State<AllPageView> {
           });
         },
         children: [
-
-          AnimatedPaddingPage(context, "TEMAS", const Grammar(), 0),
-          AnimatedPaddingPage(context, "VOCABULARIO", const vocabulary(), 1),
-          AnimatedPaddingPage(context, "VERBOS", const verbs(), 2),          
+          animatedPaddingPage(context, "TEMAS", const Grammar(), 0),
+          animatedPaddingPage(context, "VOCABULARIO", const vocabulary(), 1),
+          animatedPaddingPage(context, "VERBOS", const verbs(), 2),          
         ],
       ),
     );
   }
 
-  AnimatedPadding AnimatedPaddingPage(BuildContext context, String text, Widget pag, int num) {
+  AnimatedPadding animatedPaddingPage(BuildContext context, String title, Widget pag, int num) {
     return AnimatedPadding(
           duration: const Duration(milliseconds: 200),
           padding: _currentPage == num
@@ -53,6 +51,7 @@ class _StateAllPageView extends State<AllPageView> {
                   right: 50,
                 ),
                 decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(
@@ -85,7 +84,7 @@ class _StateAllPageView extends State<AllPageView> {
                                 height: 25,
                                 width: MediaQuery.of(context).size.width,
                                 child: Center(
-                                  child: Text(text,
+                                  child: Text(title,
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,
