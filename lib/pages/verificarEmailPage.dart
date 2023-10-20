@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:fastenglish/pages/bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

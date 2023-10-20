@@ -16,8 +16,7 @@ class _StateAllPageView extends State<AllPageView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300,
-      width: MediaQuery.of(context).size.width,
+      height: 400,
       child: PageView(
         controller: PageController(
           viewportFraction: 0.8,
@@ -28,77 +27,87 @@ class _StateAllPageView extends State<AllPageView> {
           });
         },
         children: [
-          animatedPaddingPage(context, "TEMAS", const Grammar(), 0),
-          animatedPaddingPage(context, "VOCABULARIO", const vocabulary(), 1),
-          animatedPaddingPage(context, "VERBOS", const verbs(), 2),          
+          animatedPaddingPage(context, "Contenidos", const Grammar(), 0,
+              Color(0x49FFD640), "contenido.png"),
+          animatedPaddingPage(context, "Vocabulario", const vocabulary(), 1,
+              Color(0x4EFF5252), "vocabulario.png"),
+          animatedPaddingPage(context, "Verbos", const verbs(), 2,
+              const Color.fromARGB(77, 68, 137, 255), "verbos.png"),
+          animatedPaddingPage(context, "Notas", const verbs(), 3,
+              Color(0x4B69F0AF), "notas.png"),
         ],
       ),
     );
   }
 
-  AnimatedPadding animatedPaddingPage(BuildContext context, String title, Widget pag, int num) {
+  AnimatedPadding animatedPaddingPage(BuildContext context, String title,
+      Widget pag, int num, Color color, String img) {
     return AnimatedPadding(
+      duration: const Duration(milliseconds: 200),
+      padding: _currentPage == num
+          ? const EdgeInsets.all(0)
+          : const EdgeInsets.symmetric(vertical: 30),
+      child: AnimatedOpacity(
           duration: const Duration(milliseconds: 200),
-          padding: _currentPage == num
-              ? const EdgeInsets.all(0)
-              : const EdgeInsets.symmetric(vertical: 30),
-          child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 200),
-              opacity: 0.8,
-              child: Container(
-                width: 20,
-                margin: const EdgeInsets.only(
-                  right: 50,
-                ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: TextButton(
-                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.orange.shade900),
-                            overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                                    (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.focused)) {
-                                    return Colors.red;
-                                  }
-                                  return null; // Defer to the widget's default.
-                                }
-                            ),
+          opacity: 0.8,
+          child: Container(
+            width: 20,
+            margin: const EdgeInsets.only(
+              right: 30,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color.fromARGB(179, 233, 233, 233), // Color de la sombra
+                  offset: Offset(1, 1), // Desplazamiento en X e Y
+                  blurRadius: 2, // Radio de difuminación
+                )
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                  child: TextButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(color),
+                        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                            (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.focused)) {
+                            return Colors.red;
+                          }
+                          return null; // Defer to the widget's default.
+                        }),
+                      ),
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => pag));
+                      },
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 200,
+                            child: Image.asset('assets/$img'),
+                            /* width: MediaQuery.of(context).size.width */
                           ),
-                          onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => pag));
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                color: Colors.white,
-                                height: 175,
-                                width: MediaQuery.of(context).size.width,
-                              ),
-                              SizedBox(
-                                height: 25,
-                                width: MediaQuery.of(context).size.width,
-                                child: Center(
-                                  child: Text(title,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                    ),
-                                  ),
+                          SizedBox(
+                            height: 100,
+                            /* width: MediaQuery.of(context).size.width, */
+                            child: Center(
+                              child: Text(
+                                title,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30,
                                 ),
                               ),
-                            ],
-                          )
-                      )
-
-                  ),
-                ),
-              )),
-        );
+                            ),
+                          ),
+                        ],
+                      ))),
+            ),
+          )),
+    );
   }
 }

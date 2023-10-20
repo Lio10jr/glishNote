@@ -1,4 +1,5 @@
 import 'package:fastenglish/Home.dart';
+import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/Camera.dart';
 import 'package:fastenglish/pages/Configuracion.dart';
 import 'package:fastenglish/pages/UserInfo.dart';
@@ -51,14 +52,14 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           shape: const CircularNotchedRectangle(),
           notchMargin: 0.01,
           clipBehavior: Clip.antiAlias,
-          child: Container(
+          child: SizedBox(
             height: kBottomNavigationBarHeight * 0.98,
             child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 209, 35, 145),
                 border: Border(
                   top: BorderSide(
-                    color: Color.fromARGB(255, 255, 187, 0),
+                    color: ColorsConsts.cartBadgeColor,
                     width: 0.5,
                   )
                 )
@@ -66,8 +67,8 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               child: BottomNavigationBar(
                 onTap: _selectPage,
                   backgroundColor: Theme.of(context).primaryColor,
-                //unselectedItemColor: Theme.of(context).textSelectionColor,
-                selectedItemColor: const Color.fromARGB(255, 255, 187, 0),
+                unselectedItemColor: ColorsConsts.endColor,
+                selectedItemColor: ColorsConsts.cartColor,
                 currentIndex: _selectedPageIndex,
                 items: const [
                   BottomNavigationBarItem(
@@ -102,7 +103,8 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         padding: const EdgeInsets.all(8.9),
         child: FloatingActionButton(
           hoverElevation: 10,
-          splashColor: const Color.fromARGB(255, 255, 187, 0),
+          splashColor: Color.fromARGB(255, 29, 12, 138),
+          backgroundColor: ColorsConsts.endColor,
           tooltip: 'Camera',
           elevation: 4,
           child: const Icon(Icons.camera),

@@ -20,8 +20,8 @@ class _StateLogin extends State<login> {
   static const _backgroundColor = Color.fromARGB(197, 255, 255, 255);
 
   static const _colors = [
-    Color.fromARGB(104, 247, 6, 155),
-    Color.fromARGB(97, 58, 61, 245),
+    Color(0x68F7069B),
+    Color(0x603A3DF5),
   ];
 
   static const _durations = [
