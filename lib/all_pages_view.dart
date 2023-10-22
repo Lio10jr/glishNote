@@ -1,7 +1,9 @@
+import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/Grammar.dart';
 import 'package:fastenglish/pages/verbs.dart';
 import 'package:fastenglish/pages/vocabulary.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AllPageView extends StatefulWidget {
   const AllPageView({Key? key}) : super(key: key);
@@ -28,13 +30,13 @@ class _StateAllPageView extends State<AllPageView> {
         },
         children: [
           animatedPaddingPage(context, "Contenidos", const Grammar(), 0,
-              Color(0x49FFD640), "contenido.png"),
+              const Color(0x49FFD640), "contenido.png"),
           animatedPaddingPage(context, "Vocabulario", const vocabulary(), 1,
-              Color(0x4EFF5252), "vocabulario.png"),
+              const Color(0x4EFF5252), "vocabulario.png"),
           animatedPaddingPage(context, "Verbos", const verbs(), 2,
               const Color.fromARGB(77, 68, 137, 255), "verbos.png"),
           animatedPaddingPage(context, "Notas", const verbs(), 3,
-              Color(0x4B69F0AF), "notas.png"),
+              const Color(0x4B69F0AF), "notas.png"),
         ],
       ),
     );
@@ -97,9 +99,10 @@ class _StateAllPageView extends State<AllPageView> {
                             child: Center(
                               child: Text(
                                 title,
-                                style: TextStyle(
-                                  color: Colors.white,
+                                style: GoogleFonts.ubuntu(
                                   fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorsConsts.primarybackground
                                 ),
                               ),
                             ),

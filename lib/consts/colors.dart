@@ -15,10 +15,16 @@ class ColorsConsts {
 
   static Color gradiendFStart = const Color(0xFFE040FB);
   static Color gradiendFEnd = const Color(0xFFE1BEE7);
-  static Color endColor = const Color(0xFFCE93D8);
+  
   static Color purple300 = const Color(0xFFBA68C8);
   static Color gradiendLEnd = const Color(0xFFAB47BC);
   static Color gradiendLStart = const Color(0xFFAA00FF);
   static Color starterColor = const Color(0xFF8E24AA);
   static Color purple800 = const Color(0xFF6A1B9A);
+
+  static Color primarybackground = const Color(0xFF6C60E0);
+  static Color endColor = const Color(0xFFCE93D8);
+  
+  static Color msgValidbackground = const Color.fromARGB(255, 75, 222, 112);
+  static Color msgErrbackground =  Colors.red;
 }

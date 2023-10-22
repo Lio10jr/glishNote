@@ -56,7 +56,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             height: kBottomNavigationBarHeight * 0.98,
             child: Container(
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 209, 35, 145),
+                color: Color(0xFFD12391),
                 border: Border(
                   top: BorderSide(
                     color: ColorsConsts.cartBadgeColor,
@@ -68,7 +68,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                 onTap: _selectPage,
                   backgroundColor: Theme.of(context).primaryColor,
                 unselectedItemColor: ColorsConsts.endColor,
-                selectedItemColor: ColorsConsts.cartColor,
+                selectedItemColor: ColorsConsts.primarybackground,
                 currentIndex: _selectedPageIndex,
                 items: const [
                   BottomNavigationBarItem(
@@ -103,7 +103,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         padding: const EdgeInsets.all(8.9),
         child: FloatingActionButton(
           hoverElevation: 10,
-          splashColor: Color.fromARGB(255, 29, 12, 138),
+          splashColor: ColorsConsts.primarybackground,
           backgroundColor: ColorsConsts.endColor,
           tooltip: 'Camera',
           elevation: 4,

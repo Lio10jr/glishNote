@@ -1,5 +1,6 @@
 import 'package:fastenglish/entity/ImgCamera.dart';
 import 'package:fastenglish/pages/Camera.dart';
+import 'package:fastenglish/pages/text_scan.dart';
 import 'package:fastenglish/services/appState.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';

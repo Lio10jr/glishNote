@@ -48,6 +48,7 @@ dependencies:
   list_tile_switch:
   shared_preferences: ^2.0.15
   wave: ^0.2.2
+  image: ^4.1.3
   image_picker: ^1.0.4
   flutter_facebook_auth: ^5.0.11
   firebase_storage: ^11.3.0
@@ -56,7 +57,13 @@ dependencies:
   fluttertoast: ^8.0.9
   google_ml_kit: ^0.16.2
   flutter_keyboard_visibility: ^5.4.1
+  text_to_speech: ^0.2.3
+  volume_controller: ^2.0.7
   
+  google_fonts: ^4.0.4
+  google_cloud_translation: ^0.0.3
+  image_cropper: ^4.0.1
+  permission_handler: ^11.0.1
   #Dependencia para leer archivo de excel
   #excel: ^1.1.5
 dev_dependencies:

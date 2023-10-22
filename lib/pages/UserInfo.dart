@@ -1,7 +1,9 @@
+import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/dark_theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:provider/provider.dart';
 
@@ -14,12 +16,12 @@ class _UserInfoState extends State<UserInfo> {
   late ScrollController _scrollController;
   final user = FirebaseAuth.instance.currentUser!;
   var top = 0.0;
-  bool _value = false;
+  bool value_ = false;
   String nigth = 'Activar ';
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  String? _uid;
+  final FirebaseAuth auth_ = FirebaseAuth.instance;
+  String? uid;
   String? _name;
-  String? _email;
+  String? email;
   String? _userUrlImage;
 
   @override
@@ -38,8 +40,8 @@ class _UserInfoState extends State<UserInfo> {
     setState(() {
       for (DataSnapshot sn in userDoc.children) {
         if (user.email == sn.child('Email').value) {
-          _uid = sn.key.toString();
-          _email = sn.child('Email').value.toString();
+          uid = sn.key.toString();
+          email = sn.child('Email').value.toString();
           _name = sn.child('UserName').value.toString();
           _userUrlImage = sn.child('ImagenUrl').value.toString();
         }
@@ -84,8 +86,9 @@ class _UserInfoState extends State<UserInfo> {
                                 width: 12,
                               ),
                               Container(
-                                height: kToolbarHeight / 1.8,
-                                width: kToolbarHeight / 1.8,
+                                margin: const EdgeInsets.only(top: 30.0),
+                                height: kToolbarHeight * 1,
+                                width: kToolbarHeight * 1,
                                 decoration: BoxDecoration(
                                     boxShadow: const [
                                       BoxShadow(
@@ -103,8 +106,10 @@ class _UserInfoState extends State<UserInfo> {
                               ),
                               Text(
                                 _name ?? '',
-                                style: const TextStyle(
-                                    fontSize: 20.0, color: Colors.white),
+                                style: GoogleFonts.ubuntu(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.white),
                               )
                             ],
                           )
@@ -127,7 +132,7 @@ class _UserInfoState extends State<UserInfo> {
                 titles('Informacion de Usuario'),
                 userListTile(
                     'Nombre de Usuario', _name ?? '', Icons.person, context),
-                userListTile('E-mail', _email ?? '', Icons.email, context),
+                userListTile('E-mail', email ?? '', Icons.email, context),
                 titles('Configuración de Usuario'),
                 const Divider(
                   thickness: 1,
@@ -135,17 +140,21 @@ class _UserInfoState extends State<UserInfo> {
                 ),
                 ListTileSwitch(
                   value: themeChange.darkTheme,
-                  leading: const Icon(Icons.nightlight_sharp),
+                  leading: Icon(Icons.nightlight_sharp, color: ColorsConsts.endColor),
                   onChanged: (value) {
                     setState(() {
-                      _value = value;
+                      value_ = value;
                       themeChange.darkTheme = value;
                     });
                   },
                   visualDensity: VisualDensity.comfortable,
                   switchType: SwitchType.material,
                   switchActiveColor: Colors.indigo,
-                  title: const Text('Modo Nocturno'),
+                  title: Text('Modo Nocturno',
+                  style: GoogleFonts.ubuntu(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.black),),
                 ),
                 Material(
                   color: Colors.transparent,
@@ -156,14 +165,21 @@ class _UserInfoState extends State<UserInfo> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('Cerra Sesión'),
+                                  title: Text('Cerra Sesión',
+                                  style: GoogleFonts.ubuntu(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.red),),
                                   content: const Text(
                                       '¿Estas seguro de cerrar la sesión?'),
                                   actions: [
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, 'Cancel'),
-                                      child: const Text('Cancelar', style: TextStyle(color: Colors.black),),
+                                      child: const Text(
+                                        'Cancelar',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
                                     ),
                                     TextButton(
                                       onPressed: () async {
@@ -182,7 +198,7 @@ class _UserInfoState extends State<UserInfo> {
                         'Cerrar Session',
                         style: TextStyle(color: Colors.red),
                       ),
-                      leading: const Icon(Icons.exit_to_app_rounded),
+                      leading: Icon(Icons.logout_outlined, color: ColorsConsts.endColor),
                     ),
                   ),
                 )
@@ -206,9 +222,17 @@ class _UserInfoState extends State<UserInfo> {
         splashColor: Theme.of(context).splashColor,
         child: ListTile(
           onTap: () {},
-          title: Text(title),
-          subtitle: Text(subtitle),
-          leading: Icon(icon),
+          title: Text(
+            title,
+            style: GoogleFonts.ubuntu(
+                fontSize: 15, fontWeight: FontWeight.w300, color: Colors.black),
+          ),
+          subtitle: Text(
+            subtitle,
+            style: GoogleFonts.ubuntu(
+                fontSize: 15, fontWeight: FontWeight.w300, color: Colors.black45),
+          ),
+          leading: Icon(icon, color: ColorsConsts.endColor),
         ),
       ),
     );
@@ -219,7 +243,10 @@ class _UserInfoState extends State<UserInfo> {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           text,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style: GoogleFonts.ubuntu(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
         ));
   }
 }

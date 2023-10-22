@@ -1,6 +1,8 @@
+import 'package:fastenglish/consts/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class todoAppBarLog extends StatefulWidget {
   @override
@@ -43,9 +45,9 @@ class todoAppBarLogState extends State<todoAppBarLog> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xFF5E35B1),
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.0)),
+      decoration:  BoxDecoration(
+        color: ColorsConsts.primarybackground,
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(30.0)),
       ),
       margin: const EdgeInsets.only(bottom: 50),
       height: 140.0,
@@ -58,21 +60,21 @@ class todoAppBarLogState extends State<todoAppBarLog> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Text(
+                  Text(
                     "Hola ",
-                    style: TextStyle(
+                    style: GoogleFonts.ubuntu(
                       fontSize: 20,
-                      fontFamily: 'Grenze',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white54,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white54
                     ),
                   ),
                   Text(
                     name ?? '',
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                    style: GoogleFonts.ubuntu(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white
+                    ),
                   ),
                 ],
               ),
@@ -96,36 +98,34 @@ class todoAppBarLogState extends State<todoAppBarLog> {
           const SizedBox(
             height: 5,
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 "Estas de vuelta",
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'Grenze',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+                style: GoogleFonts.ubuntu(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+                    ),
               ),
               Row(
                 children: [
                   Text(
                     "GLISH",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontFamily: 'Grenze',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                    style: GoogleFonts.ubuntu(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white54
                     ),
                   ),
                   Text(
                     "NOTES",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFF44336),
+                    style: GoogleFonts.ubuntu(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white
                     ),
                   ),
                 ],
