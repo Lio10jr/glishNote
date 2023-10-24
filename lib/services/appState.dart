@@ -58,9 +58,9 @@ class AppState with ChangeNotifier {
     }
   }
 
-  Future<bool> saveApuntes(String s, String text, String text2, String text3 ) async {
+  Future<bool> saveApuntes(String s, String text, String text2) async {
     try {
-      bool respuesta = await UserServices().saveApuntesTopic(s, text, text2, text3);
+      bool respuesta = await UserServices().saveApuntesTopic(s, text, text2);
       if(respuesta) {
         notifyListeners();
       }

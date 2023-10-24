@@ -1,0 +1,29 @@
+[
+    {
+        "titulo": "Past Tense",
+        "subtitulos": [
+            "Past Simple",
+            "Past Continuous",
+            "Past Perfect",
+            "Past Perfect Continuous"
+        ]
+    },
+    {
+        "titulo": "Present Tense",
+        "subtitulos": [
+            "Present Simple",
+            "Present Continuous",
+            "Present Perfect",
+            "Present Perfect Continuous"
+        ]
+    },
+    {
+        "titulo": "Future",
+        "subtitulos": [
+            "Simple Future",
+            "Future Continuous",
+            "Future Perfect",
+            "Future Perfect Continuous"
+        ]
+    }
+]

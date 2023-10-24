@@ -1,3 +1,4 @@
+/* import 'package:fastenglish/entity/ContenidoPageTitulo.dart';
 import 'package:fastenglish/pages/Grammar.dart';
 import 'package:fastenglish/services/appState.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,16 +11,16 @@ import '../entity/ApuntesTopic.dart';
 import 'ListaApuntes.dart';
 
 class allTopic extends StatefulWidget {
-  late final int pos;
   late final String tema;
 
-  allTopic({required this.pos, required this.tema});
+  allTopic({required this.tema});
 
   @override
   StateallTopic createState() => StateallTopic();
 }
 
 late List<ApuntesTopic> dataApuntesTopicList = [];
+late List<ContenidoPageTitulo> dataContenidoPageTituloList = [];
 
 class StateallTopic extends State<allTopic> {
   TextEditingController textControlador = TextEditingController();
@@ -437,3 +438,4 @@ class StateallTopic extends State<allTopic> {
     );
   }
 }
+ */

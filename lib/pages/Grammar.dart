@@ -1,8 +1,9 @@
-import 'package:fastenglish/entity/TopicE.dart';
-import 'package:fastenglish/pages/all_topic.dart';
+import 'package:fastenglish/consts/colors.dart';
+import 'package:fastenglish/entity/ContenidoPage.dart';
+import 'package:fastenglish/widgets/text_title.dart';
+import 'package:fastenglish/pages/contenido_page_titulo.dart';
+import 'package:fastenglish/widgets/app_bar_icon.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart' as rootBundle;
 
 import '../main.dart';
 
@@ -12,190 +13,137 @@ class Grammar extends StatefulWidget {
   _grammarState createState() => _grammarState();
 }
 
-  late List<contTopic> listCT;
-
 class _grammarState extends State<Grammar> {
-  late List<contTopic> listCTT = [] as List<contTopic>;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("GRAMMAR"),
-          shadowColor: Colors.red,
-          backgroundColor: Colors.orange.shade900,
-        ),
-        body: SizedBox(
-          height: Size.infinite.height,
-          width: Size.infinite.width,
-          child: FutureBuilder(
-              future: readJsonDataCT(),
-              builder: (context, data) {
-                if (data.hasError) {
-                  return Center(child: Text("${data.error}"));
-                } else if (data.hasData) {
-                  var items = data.data as List<contTopic>;
-                  listCT = items;
-                  return ListView.builder(
-                      itemCount: 1,
-                      itemBuilder: (context, index) {
-                        return Stack(
-                          children: [
-                            Container(
-                              width: Size.infinite.width * 0.5,
-                              margin: const EdgeInsets.only(top: 30),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: 20,
-                                    width: Size.infinite.width * 0.5,
-                                    alignment: Alignment.center,
-                                    child: const Text("PAST TENSE",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.red,
-                                        )),
-                                  ),
-                                  SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    padding: const EdgeInsets.all(25),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        circleButton(context, 'PAST SIMPLE', allTopic(pos: 0, tema:'PAST SIMPLE',)),
-                                        const SizedBox(width: 10),
-                                        circleButton(context, 'PAST CONTINUOUS', allTopic(pos: 1, tema:'PAST CONTINUOUS',)),
-                                        const SizedBox(width: 10),
-                                        circleButton(context, 'PAST PERFECT', allTopic(pos: 2, tema:'PAST PERFECT',)),
-                                        const SizedBox(width: 10),
-                                        circleButton(context, 'PAST PERFECT CONTINUOUS', allTopic(pos: 3, tema:'PAST PERFECT CONTINUOUS',)),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 20,
-                                    width: Size.infinite.width * 0.5,
-                                    alignment: Alignment.center,
-                                    child: const Text("PRESENT TENSE",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.red,
-                                        )),
-                                  ),
-                                  SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    padding: const EdgeInsets.all(25),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        circleButton(context, 'PRESENT SIMPLE', allTopic(pos: 4, tema:'PRESENT SIMPLE',)),
-                                        const SizedBox(width: 10),
-                                        circleButton(context, 'PRESENT CONTINUOUS', allTopic(pos: 5, tema:'PRESENT CONTINUOUS',)),
-                                        const SizedBox(width: 10),
-                                        circleButton(context, 'PRESENT PERFECT', allTopic(pos: 6, tema:'PRESENT PERFECT',)),
-                                        const SizedBox(width: 10),
-                                        circleButton(context, 'PRESENT PERFECT CONTINUOUS', allTopic(pos: 7, tema:'PRESENT PERFECT CONTINUOUS',)),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 20,
-                                    width: Size.infinite.width * 0.5,
-                                    alignment: Alignment.center,
-                                    child: const Text("FUTURE",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.red,
-                                        )),
-                                  ),
-                                  SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    padding: const EdgeInsets.all(25),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        circleButton(context, 'SIMPLE FUTURE', allTopic(pos: 8, tema:'SIMPLE FUTURE',)),
-                                        const SizedBox(width: 10),
-                                        circleButton(context, 'FUTURE CONTINUOUS', allTopic(pos: 9, tema:'FUTURE CONTINUOUS',)),
-                                        const SizedBox(width: 10),
-                                        circleButton(context, 'FUTURE PERFECT', allTopic(pos: 10, tema:'FUTURE PERFECT',)),
-                                        const SizedBox(width: 10),
-                                        circleButton(context, 'FUTURE PERFECT CONTINUOUS', allTopic(pos: 11, tema:'FUTURE PERFECT CONTINUOUS',)),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      });
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              }),
-        ));
-  }
-
-  SizedBox circleButton(BuildContext context, String tema, Widget pag) {
-    return SizedBox.fromSize(
-      size: const Size(120, 120),
-      // button width and height
-      child: ClipOval(
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  end: Alignment
-                      .bottomCenter,
-                  colors: [
-                Colors.orange.shade400
-                    .withOpacity(0.4),
-                Colors.orange.shade400
-              ])), // button color
-          child: InkWell(
-            splashColor: Colors.lightGreen,
-            // splash color
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          pag));
-            },
-            // button pressed
-            child: Column(
-              mainAxisAlignment:
-                  MainAxisAlignment.center,
-              children: <Widget>[
-                const Icon(Icons.article,
-                    color: Colors.white,
-                    size: 40),
-                // icon
-                topicText(tema),
-                // text
-              ],
-            ),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(100.0),
+          child: app_bar_icon(
+            title: 'Contenido',
+            icon: Icons.import_contacts,
           ),
         ),
-      ),
-      );
+        body: FutureBuilder(
+            future: readJsonDataContainerPage(),
+            builder: (context, data) {
+              if (data.hasError) {
+                return Center(child: Text("${data.error}"));
+              } else if (data.hasData) {
+                var items = data.data as List<contenidoPage>;
+                return ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final temas = items[index];
+                      return Stack(
+                        children: [
+                          Container(
+                            width: Size.infinite.width * 0.5,
+                            margin: const EdgeInsets.only(top: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: Size.infinite.width * 0.5,
+                                  alignment: Alignment.center,
+                                  child: text_title(
+                                    titulo: temas.titulo ?? '',
+                                    size: 20,
+                                    fontw: FontWeight.w800,
+                                    color: ColorsConsts.primarybackground,
+                                  ),
+                                ),
+                                if (temas.subtitulos != null)
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          padding: const EdgeInsets.only(
+                                              left: 25, right: 25),
+                                          itemCount: temas.subtitulos!.length,
+                                          itemBuilder: (context, subIndex) {
+                                            return card(
+                                                context,
+                                                temas.subtitulos![subIndex],
+                                                contenido_page_titulo(
+                                                  tema: temas
+                                                      .subtitulos![subIndex],
+                                                ));
+                                          }),
+                                    ],
+                                  )
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    });
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }));
   }
 
-  Text topicText(String text) {
-    return Text(
-      text,
-      textAlign: TextAlign.center,
-      style: const TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.bold,
+  Card card(BuildContext context, String tema, Widget pagina) {
+    return Card(
+      elevation: 5.0,
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.circular(20.0), // Personaliza el radio de las esquinas
+      ),
+      child: InkWell(
+        splashColor: ColorsConsts.backgroundColor,
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => pagina));
+        },
+        child: SizedBox(
+          width: 250,
+          height: 100,
+          child: Row(
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Icon(Icons.article,
+                      color: ColorsConsts.endColor, size: 80)),
+              Container(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(tema),
+                        const Row(
+                          children: [
+                            Icon(Icons.star_rounded,
+                                color: Colors.yellow, size: 25),
+                            Icon(Icons.star_rounded,
+                                color: Colors.yellow, size: 25),
+                            Icon(Icons.star_rounded,
+                                color: Colors.yellow, size: 25),
+                            Icon(Icons.star_rounded,
+                                color: Colors.yellow, size: 25),
+                            Icon(Icons.star_rounded,
+                                color: Colors.yellow, size: 25),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

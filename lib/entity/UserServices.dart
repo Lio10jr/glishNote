@@ -60,14 +60,13 @@ class UserServices {
     }
   }
 
-  Future<bool> saveApuntesTopic(String email, String tema,String subTema, String contenido) async {
+  Future<bool> saveApuntesTopic(String email, String tema, String contenido) async {
     try {
       String name = "TopicNote/" + tema;
         
        await FirebaseDatabase.instance.ref().child(name).push().set({
           'Email': email,
           'Tema': tema,
-          'SubTema': subTema,
           'Contenido': contenido,
         });
       return true;

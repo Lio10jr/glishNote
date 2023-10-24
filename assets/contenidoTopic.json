@@ -1,14 +1,542 @@
 [
   {
-    "USO": "Para acciones que ocurrieron en el pasado.\nHablar de cosas que ya no ocurren o que ocurren en el presente.",
-    "AFFIRMATIVE": "Subject + Verb (-d, -ed) / Verb (past) + Complement",
-    "INFOA": "La '-d' se añade al final del verbo cuando su letra es la 'e': Close - Cerrado.\nLa '-ed' es la terminación que se utiliza en los verbos que terminan en consonante o en y.",
-    "EXAMPLEA": "The game ended 10 minutes ago.\nI saw a ghost last Friday.",
-    "NEGATIVE": "Subject + did not (didn't) + Verb in Basic Form + Complement",
-    "INFON": "Uso del auxiliar do/does, para la conjugación en pasado, mientras el verbo permanece en forma de infinitivo.",
-    "EXAMPLEN": "She didn't work yesterday.\nThey didn’t do it.",
-    "INTERROGATIVE": "Did + Subject + Verb in Basic Form + Complement",
-    "INFOI": "Utilizamos Did para las preguntas en las que el verbo es regular.",
-    "EXAMPLEI": "Where did you buy those chocolates?\nDid she go to the Paris in the October of 2002?"
+    "titulo": "Past Simple",
+    "Utilización": "El Past Simple se utiliza para hablar de acciones completadas en el pasado.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + verbo en pasado simple + complemento",
+            "informacion": "Con el Past Simple se puede expresar acciones que ocurrieron en un momento específico en el pasado.",
+            "Ejemplos": [
+              "I walked to the store yesterday.",
+              "She ate breakfast at 7am this morning."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + did not + verbo en infinitivo + complemento",
+            "informacion": "Con el Past Simple en forma negativa se puede expresar que una acción no ocurrió en el pasado.",
+            "Ejemplos": [
+              "I did not walk to the store yesterday.",
+              "She did not eat breakfast at 7am this morning."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Did + sujeto + verbo en infinitivo + complemento + ?",
+            "informacion": "Con el Past Simple en forma interrogativa se puede preguntar por acciones que ocurrieron en el pasado.",
+            "Ejemplos": [
+              "Did you walk to the store yesterday?",
+              "Did she eat breakfast at 7am this morning?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Past Continuous",
+    "Utilización": "El Past Continuous se utiliza para hablar de acciones en progreso en un momento específico en el pasado.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + was/were + verbo en gerundio + complemento",
+            "informacion": "Con el Past Continuous se puede expresar acciones que estaban en progreso en un momento específico en el pasado.",
+            "Ejemplos": [
+              "I was walking to the store when it started raining.",
+              "She was eating breakfast when the phone rang."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + was/were not + verbo en gerundio + complemento",
+            "informacion": "Con el Past Continuous en forma negativa se puede expresar que una acción no estaba en progreso en el pasado.",
+            "Ejemplos": [
+              "I was not walking to the store when it started raining.",
+              "She was not eating breakfast when the phone rang."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Was/Were + sujeto + verbo en gerundio + complemento + ?",
+            "informacion": "Con el Past Continuous en forma interrogativa se puede preguntar por acciones que estaban en progreso en el pasado.",
+            "Ejemplos": [
+              "Was I walking to the store when it started raining?",
+              "Was she eating breakfast when the phone rang?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Past Perfect",
+    "Utilización": "El Past Perfect se utiliza para hablar de acciones completadas antes de otra acción en el pasado.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + had + participio pasado del verbo + complemento",
+            "informacion": "Con el Past Perfect se puede expresar que una acción ocurrió antes de otra acción en el pasado.",
+            "Ejemplos": [
+              "I had finished my homework before I went to bed.",
+              "She had eaten breakfast before she went to work."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + had not + participio pasado del verbo + complemento",
+            "informacion": "Con el Past Perfect en forma negativa se puede expresar que una acción no ocurrió antes de otra acción en el pasado.",
+            "Ejemplos": [
+              "I had not finished my homework before I went to bed.",
+              "She had not eaten breakfast before she went to work."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Had + sujeto + participio pasado del verbo + complemento + ?",
+            "informacion": "Con el Past Perfect en forma interrogativa se puede preguntar por acciones que ocurrieron antes de otra acción en el pasado.",
+            "Ejemplos": [
+              "Had you finished your homework before you went to bed?",
+              "Had she eaten breakfast before she went to work?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Past Perfect Continuous",
+    "Utilización": "El Past Perfect Continuous se utiliza para hablar de acciones en progreso antes de otra acción en el pasado.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + had been + verbo en gerundio + complemento",
+            "informacion": "Con el Past Perfect Continuous se puede expresar que una acción estaba en progreso antes de otra acción en el pasado.",
+            "Ejemplos": [
+              "I had been studying for two hours before I took a break.",
+              "She had been working on the project for a week before she submitted it."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + had not been + verbo en gerundio + complemento",
+            "informacion": "Con el Past Perfect Continuous en forma negativa se puede expresar que una acción no estaba en progreso antes de otra acción en el pasado.",
+            "Ejemplos": [
+              "I had not been studying for two hours before I took a break.",
+              "She had not been working on the project for a week before she submitted it."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Had + sujeto + been + verbo en gerundio + complemento + ?",
+            "informacion": "Con el Past Perfect Continuous en forma interrogativa se puede preguntar por acciones que estaban en progreso antes de otra acción en el pasado.",
+            "Ejemplos": [
+              "Had you been studying for two hours before you took a break?",
+              "Had she been working on the project for a week before she submitted it?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Present Simple",
+    "Utilización": "El Present Simple se utiliza para hablar de acciones habituales o verdades universales.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + verbo en presente simple + complemento",
+            "informacion": "Con el Present Simple se puede expresar acciones que ocurren habitualmente o verdades universales.",
+            "Ejemplos": [
+              "I walk to work every day.",
+              "The sun rises in the east."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + do/does not + verbo en infinitivo + complemento",
+            "informacion": "Con el Present Simple en forma negativa se puede expresar que una acción no ocurre habitualmente o no es una verdad universal.",
+            "Ejemplos": [
+              "I do not walk to work on weekends.",
+              "The sun does not rise in the west."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Do/Does + sujeto + verbo en infinitivo + complemento + ?",
+            "informacion": "Con el Present Simple en forma interrogativa se puede preguntar por acciones habituales o verdades universales.",
+            "Ejemplos": [
+              "Do you walk to work every day?",
+              "Does the sun rise in the east?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Present Continuous",
+    "Utilización": "El Present Continuous se utiliza para hablar de acciones en progreso en el momento actual.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + to be + verbo en gerundio + complemento",
+            "informacion": "Con el Present Continuous se puede expresar acciones que están en progreso en el momento actual.",
+            "Ejemplos": [
+              "I am currently working on a project.",
+              "She is watching a movie right now."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + to be not + verbo en gerundio + complemento",
+            "informacion": "Con el Present Continuous en forma negativa se puede expresar que una acción no está en progreso en el momento actual.",
+            "Ejemplos": [
+              "I am not currently working on a project.",
+              "She is not watching a movie right now."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "To be + sujeto + verbo en gerundio + complemento + ?",
+            "informacion": "Con el Present Continuous en forma interrogativa se puede preguntar por acciones que están en progreso en el momento actual.",
+            "Ejemplos": [
+              "Are you currently working on a project?",
+              "Is she watching a movie right now?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Present Perfect",
+    "Utilización": "El Present Perfect se utiliza para hablar de acciones completadas en un tiempo no específico en el pasado que tienen una conexión con el presente.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + have/has + participio pasado del verbo + complemento",
+            "informacion": "Con el Present Perfect se puede expresar acciones que ocurrieron en un tiempo no específico en el pasado y que tienen una conexión con el presente.",
+            "Ejemplos": [
+              "I have visited Paris twice.",
+              "She has studied English for five years."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + have/has not + participio pasado del verbo + complemento",
+            "informacion": "Con el Present Perfect en forma negativa se puede expresar que una acción no ocurrió en un tiempo no específico en el pasado y que no tiene una conexión con el presente.",
+            "Ejemplos": [
+              "I have not visited Paris yet.",
+              "She has not studied English for very long."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Have/Has + sujeto + participio pasado del verbo + complemento + ?",
+            "informacion": "Con el Present Perfect en forma interrogativa se puede preguntar por acciones que ocurrieron en un tiempo no específico en el pasado y que tienen una conexión con el presente.",
+            "Ejemplos": [
+              "Have you ever visited Paris?",
+              "Has she studied English for a long time?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Present Perfect Continuous",
+    "Utilización": "El Present Perfect Continuous se utiliza para hablar de acciones que comenzaron en el pasado y continúan en el presente.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + have/has been + verbo en gerundio + complemento",
+            "informacion": "Con el Present Perfect Continuous se puede expresar acciones que comenzaron en el pasado y continúan en el presente.",
+            "Ejemplos": [
+              "I have been studying Spanish for three years.",
+              "She has been working at the company since 2010."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + have/has not been + verbo en gerundio + complemento",
+            "informacion": "Con el Present Perfect Continuous en forma negativa se puede expresar que una acción no comenzó en el pasado y no continúa en el presente.",
+            "Ejemplos": [
+              "I have not been studying Spanish for very long.",
+              "She has not been working at the company for very long."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Have/Has + sujeto + been + verbo en gerundio + complemento + ?",
+            "informacion": "Con el Present Perfect Continuous en forma interrogativa se puede preguntar por acciones que comenzaron en el pasado y continúan en el presente.",
+            "Ejemplos": [
+              "Have you been studying Spanish for a long time?",
+              "Has she been working at the company for a long time?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Simple Future",
+    "Utilización": "El Simple Future se utiliza para hablar de acciones que ocurrirán en el futuro.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + will + verbo en infinitivo + complemento",
+            "informacion": "Con el Simple Future se puede expresar acciones que ocurrirán en el futuro.",
+            "Ejemplos": [
+              "I will go to the store tomorrow.",
+              "She will study for the exam next week."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + will not + verbo en infinitivo + complemento",
+            "informacion": "Con el Simple Future en forma negativa se puede expresar que una acción no ocurrirá en el futuro.",
+            "Ejemplos": [
+              "I will not go to the store tomorrow.",
+              "She will not study for the exam next week."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Will + sujeto + verbo en infinitivo + complemento + ?",
+            "informacion": "Con el Simple Future en forma interrogativa se puede preguntar por acciones que ocurrirán en el futuro.",
+            "Ejemplos": [
+              "Will you go to the store tomorrow?",
+              "Will she study for the exam next week?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Future Continuous",
+    "Utilización": "El Future Continuous se utiliza para hablar de acciones que estarán en progreso en un momento específico en el futuro.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + will be + verbo en gerundio + complemento",
+            "informacion": "Con el Future Continuous se puede expresar acciones que estarán en progreso en un momento específico en el futuro.",
+            "Ejemplos": [
+              "I will be studying at 8pm tomorrow.",
+              "She will be working on the project next Friday."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + will not be + verbo en gerundio + complemento",
+            "informacion": "Con el Future Continuous en forma negativa se puede expresar que una acción no estará en progreso en un momento específico en el futuro.",
+            "Ejemplos": [
+              "I will not be studying at 8pm tomorrow.",
+              "She will not be working on the project next Friday."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Will + sujeto + be + verbo en gerundio + complemento + ?",
+            "informacion": "Con el Future Continuous en forma interrogativa se puede preguntar por acciones que estarán en progreso en un momento específico en el futuro.",
+            "Ejemplos": [
+              "Will you be studying at 8pm tomorrow?",
+              "Will she be working on the project next Friday?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Future Perfect",
+    "Utilización": "El Future Perfect se utiliza para hablar de acciones que estarán completadas en un momento específico en el futuro.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + will have + participio pasado del verbo + complemento",
+            "informacion": "Con el Future Perfect se puede expresar acciones que estarán completadas en un momento específico en el futuro.",
+            "Ejemplos": [
+              "I will have finished the project by next Monday.",
+              "She will have graduated by the end of the year."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + will not have + participio pasado del verbo + complemento",
+            "informacion": "Con el Future Perfect en forma negativa se puede expresar que una acción no estará completada en un momento específico en el futuro.",
+            "Ejemplos": [
+              "I will not have finished the project by next Monday.",
+              "She will not have graduated by the end of the year."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Will + sujeto + have + participio pasado del verbo + complemento + ?",
+            "informacion": "Con el Future Perfect en forma interrogativa se puede preguntar por acciones que estarán completadas en un momento específico en el futuro.",
+            "Ejemplos": [
+              "Will you have finished the project by next Monday?",
+              "Will she have graduated by the end of the year?"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "titulo": "Future Perfect Continuous",
+    "Utilización": "El Future Perfect Continuous se utiliza para hablar de acciones que estarán en progreso y completadas en un momento específico en el futuro.",
+    "contenido": [
+      {
+        "subtitulo": "Estructura Forma Afirmativa",
+        "datos": [
+          {
+            "uso": "Sujeto + will have been + verbo en gerundio + complemento",
+            "informacion": "Con el Future Perfect Continuous se puede expresar acciones que estarán en progreso y completadas en un momento específico en el futuro.",
+            "Ejemplos": [
+              "I will have been studying for six hours by the time the exam starts.",
+              "She will have been working at the company for ten years by next month."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Negativa",
+        "datos": [
+          {
+            "uso": "Sujeto + will not have been + verbo en gerundio + complemento",
+            "informacion": "Con el Future Perfect Continuous en forma negativa se puede expresar que una acción no estará en progreso y completada en un momento específico en el futuro.",
+            "Ejemplos": [
+              "I will not have been studying for very long by the time the exam starts.",
+              "She will not have been working at the company for very long by next month."
+            ]
+          }
+        ]
+      },
+      {
+        "subtitulo": "Estructura Forma Interrogativa",
+        "datos": [
+          {
+            "uso": "Will + sujeto + have been + verbo en gerundio + complemento + ?",
+            "informacion": "Con el Future Perfect Continuous en forma interrogativa se puede preguntar por acciones que estarán en progreso y completadas en un momento específico en el futuro.",
+            "Ejemplos": [
+              "Will you have been studying for a long time by the time the exam starts?",
+              "Will she have been working at the company for a long time by next month?"
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]
