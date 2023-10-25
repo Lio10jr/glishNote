@@ -1,8 +1,12 @@
+import 'package:fastenglish/consts/colors.dart';
+import 'package:fastenglish/pages/add_vocabulario_page.dart';
+import 'package:fastenglish/pages/edit_note_page.dart';
+import 'package:fastenglish/pages/edit_vocabulario_page.dart';
 import 'package:fastenglish/services/appState.dart';
+import 'package:fastenglish/widgets/text_title.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
 import '../entity/VocabularyNote.dart';
@@ -17,14 +21,9 @@ class vocabulary extends StatefulWidget {
 late List<VocabularyNote> dataVocabularyList = [];
 
 class Statevocabulary extends State<vocabulary> {
-  int _currentSortColumn = 0;
-  bool _isSortAsc = true;
-  final TextEditingController? _textBuscar = TextEditingController();
-  final TextEditingController _inglesController = TextEditingController();
-  final TextEditingController _espanishController = TextEditingController();
-  final TextEditingController _pronunciacionController =
-      TextEditingController();
-  final GlobalKey<FormState> _formularioKey = GlobalKey<FormState>();
+  final int _currentSortColumn = 0;
+  final bool _isSortAsc = true;
+  final TextEditingController _textBuscar = TextEditingController();
   final user = FirebaseAuth.instance.currentUser!;
   List misnotas = [];
   AppState? estadado;
@@ -32,8 +31,8 @@ class Statevocabulary extends State<vocabulary> {
   //database
   late final dref = FirebaseDatabase.instance.ref();
   late DatabaseReference databaseReferent;
-  late List<VocabularyNote> listBuscar =
-      [] as List<VocabularyNote>; //lista de busquedad
+  late List listBuscar =
+      [] as List<VocabularyNote>;
   DatabaseReference refbase =
       FirebaseDatabase.instance.ref().child("VocabularyNote");
 
@@ -41,25 +40,41 @@ class Statevocabulary extends State<vocabulary> {
   Widget build(BuildContext context) {
     estadado = Provider.of<AppState>(context, listen: true);
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween ,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(300.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
             children: [
-              const Text("VOCABULARY"),
-              IconButton(
-                icon: const Icon(Icons.refresh),
-                onPressed: (){
-                  setState(() {});
-                },
+              Container(
+                  width: 200,
+                  padding: const EdgeInsets.only(top: 50, bottom: 50),
+                  child: text_title(
+                      color: ColorsConsts.primarybackground,
+                      size: 30,
+                      fontw: FontWeight.w500,
+                      titulo: "Todo tu vocabulario esta aqui!")),
+              Ink(
+                decoration: ShapeDecoration(
+                  color: ColorsConsts.primarybackground,
+                  shape: const CircleBorder(),
+                ),
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back_ios_sharp,
+                      color: Colors.white,
+                      size: 30,
+                    )),
               )
             ],
           ),
-          shadowColor: Colors.red,
-          backgroundColor: Colors.orange.shade900,
         ),
         body: Stack(
           children: [
@@ -67,25 +82,30 @@ class Statevocabulary extends State<vocabulary> {
               margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(255, 255, 187, 0)),
+                  color: ColorsConsts.primarybackground),
               child: TextField(
                 controller: _textBuscar,
-
                 onChanged: (val) {
                   setState(() {
-                    listBuscar = dataVocabularyList
-                        .where(((element) => element.ingles
+                    listBuscar = misnotas
+                        .where((element) {
+                          final inglesPalabra = element.ingles
                             .toLowerCase()
-                            .contains(val.toLowerCase())))
+                            .contains(val.toLowerCase());
+                          final espaPalabra = element.espanish
+                            .toLowerCase()
+                            .contains(val.toLowerCase());
+                            return inglesPalabra || espaPalabra;
+                        })
                         .toList();
                   });
                 },
                 decoration: InputDecoration(
-                    suffixIcon:  IconButton(
+                    suffixIcon: IconButton(
                       icon: const Icon(Icons.clear),
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
-                          _textBuscar!.clear();
+                          _textBuscar.clear();
                         });
                       },
                     ),
@@ -98,24 +118,27 @@ class Statevocabulary extends State<vocabulary> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 50),
+              margin: const EdgeInsets.only(top:80),
               padding:
-                  const EdgeInsets.only(top: 20, bottom: 20, right: 5, left: 5),
+                  const EdgeInsets.only(right: 10, left: 10),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(30),),
+                color: Colors.grey[200],
+              ),
               child: FutureBuilder(
-                future: estadado!.obtenerNotas(user.email!),
+                future: estadado!.obtenerVocabulario(user.email!),
                 builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
                   misnotas = snapshot.data ?? [];
                   return ListView(children: [
                     DataTable(
-                      horizontalMargin: 7,                      
+                      horizontalMargin: 7,
                       columnSpacing: 0,
-                      dataRowHeight: 80,
                       sortColumnIndex: _currentSortColumn,
                       sortAscending: _isSortAsc,
                       border: const TableBorder(
-                          horizontalInside: BorderSide(width: 1,)),
+                          horizontalInside: BorderSide(width: 1)),
                       headingRowColor: MaterialStateColor.resolveWith(
-                          (states) => Colors.orange.shade400),
+                          (states) => ColorsConsts.endColor),
                       columns: const <DataColumn>[
                         DataColumn(
                           label: Text(
@@ -131,55 +154,100 @@ class Statevocabulary extends State<vocabulary> {
                         ),
                         DataColumn(
                           label: Text(
-                            "Pronunciacion",
+                            "Pronunciación",
                             style: TextStyle(fontStyle: FontStyle.italic),
                           ),
                         ),
                         DataColumn(
-                          label: Text("Eliminar",
+                          label: Text("Act.",
                               style: TextStyle(fontStyle: FontStyle.italic)),
                         ),
                       ],
                       rows: [
-                        if (_textBuscar!.text.isNotEmpty)
+                        if (_textBuscar.text.isNotEmpty)
                           for (VocabularyNote nota in listBuscar)
                             DataRow(
                               selected: true,
                               cells: <DataCell>[
-                                DataCell(Text(nota.ingles),),
+                                DataCell(
+                                  Text(nota.ingles),
+                                ),
                                 DataCell(Text(nota.espanish)),
                                 DataCell(Text(nota.pronunciacion)),
-                                DataCell(IconButton(
-                                    icon: Icon(
-                                  Icons.delete,
-                                  color: Colors.red.shade300,
-                                      size: 20,
-                                ),
-                                  onPressed: (){
-                                      estadado!.deleteNota(nota.key);
-                                  },
-                                )
-                                )
+                                DataCell(Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 20,
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: ColorsConsts.primarybackground,
+                                          size: 20,
+                                        ),
+                                        onPressed: () {
+                                          estadado!.deleteVocabulario(nota.key);
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.red.shade300,
+                                          size: 20,
+                                        ),
+                                        onPressed: () {
+                                          estadado!.deleteVocabulario(nota.key);
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ))
                               ],
                             ),
-                        if (_textBuscar!.text.isEmpty)
+                        if (_textBuscar.text.isEmpty)
                           for (VocabularyNote nota in misnotas)
                             DataRow(
                               cells: <DataCell>[
                                 DataCell(Text(nota.ingles)),
                                 DataCell(Text(nota.espanish)),
                                 DataCell(Text(nota.pronunciacion)),
-                                DataCell(IconButton(
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: Colors.red.shade300,
-                                    size: 20,
-                                  ),
-                                  onPressed: (){
-                                    estadado!.deleteNota(nota.key);
-                                  },
-                                )
-                                )
+                                DataCell(Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 20,
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: ColorsConsts.primarybackground,
+                                          size: 20,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) => edit_vocabulario_page(objVocabulario: nota,)));
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.red.shade300,
+                                          size: 20,
+                                        ),
+                                        onPressed: () {
+                                          estadado!.deleteVocabulario(nota.key);
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ))
                               ],
                             ),
                       ],
@@ -192,187 +260,15 @@ class Statevocabulary extends State<vocabulary> {
         ),
         floatingActionButton: FloatingActionButton(
           splashColor: Colors.orange.shade200,
-          backgroundColor: Colors.orange.shade900,
+          backgroundColor: ColorsConsts.primarybackground,
           child: const Icon(
             Icons.add,
-            size: 50,
+            size: 30,
           ),
           onPressed: () {
-            _inglesController.clear();
-            _espanishController.clear();
-            _pronunciacionController.clear();
-            showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                shape: const RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(25.0))),
-                builder: (BuildContext context) {
-                  return Container(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: Form(
-                      key: _formularioKey,
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          Container(
-                            color: Colors.orange.shade900,
-                            height: 60,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(left: 15),
-                                  child: const Text(
-                                    "Nuevo",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 30),
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(
-                                        Ionicons.bookmark,
-                                        size: 30,
-                                      ),
-                                      onPressed: () async {
-                                        if (_formularioKey.currentState!
-                                            .validate()) {
-                                          Navigator.pop(context);
-                                          bool result = await Provider.of<AppState>(
-                                                  context,
-                                                  listen: false)
-                                              .saveNotas(
-                                                  user.email!,
-                                                  _inglesController.text,
-                                                  _espanishController.text,
-                                                  _pronunciacionController.text);
-                                          if (result) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                content:
-                                                    Text("Agregado correctamente"),
-                                                backgroundColor: Colors.lightGreen,
-                                              )
-                                              );
-                                          } else {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                              content: Text("Algo salio mal"),
-                                              backgroundColor: Colors.red,
-                                            ));
-                                          }
-                                        }
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.close_sharp,
-                                        size: 30,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                          content: Text("Proceso cancelado"),
-                                        ));
-                                        setState(() {
-                                          _pronunciacionController.clear();
-                                          _espanishController.clear();
-                                          _inglesController.clear();
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          Flexible(
-                            child: Container(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
-                              child: TextFormField(
-                                controller: _inglesController,maxLength: 17,
-                                decoration: const InputDecoration(
-                                  labelText: "Ingles",
-                                  hintText: "Write Here in English!",
-                                  border: OutlineInputBorder(),
-                                ),
-                                validator: (String? date) {
-                                  if (date!.isEmpty) {
-                                    return "Este campo es requerido";
-                                  }
-                                },
-                                maxLines: 1,
-                                keyboardType: TextInputType.multiline,
-                                textCapitalization: TextCapitalization.sentences,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          Flexible(
-                            child: Container(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
-                              child: TextFormField(
-                                controller: _espanishController,
-                                maxLength: 17,
-                                decoration: const InputDecoration(
-                                  labelText: "Español",
-                                  hintText: "Write Here in Spanish!",
-                                  border: OutlineInputBorder(),
-                                ),
-                                validator: (String? date) {
-                                  if (date!.isEmpty) {
-                                    return "Este campo es requerido";
-                                  }
-                                },
-                                maxLines: 1,
-                                keyboardType: TextInputType.multiline,
-                                textCapitalization: TextCapitalization.sentences,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          Flexible(
-                            child: Container(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
-                              child: TextFormField(
-                                controller: _pronunciacionController,
-                                maxLength: 17,
-                                decoration: const InputDecoration(
-                                  labelText: "Pronunciación",
-                                  hintText: "Write Here the pronunciation!",
-                                  border: OutlineInputBorder(),
-                                ),
-                                validator: (String? date) {
-                                  if (date!.isEmpty) {
-                                    return "Este campo es requerido";
-                                  }
-                                },
-                                maxLines: 1,
-                                keyboardType: TextInputType.multiline,
-                                textCapitalization: TextCapitalization.sentences,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                });
-          },
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const add_vocabulario_page()));
+          }
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/Grammar.dart';
+import 'package:fastenglish/pages/ListaApuntes.dart';
 import 'package:fastenglish/pages/verbs.dart';
 import 'package:fastenglish/pages/vocabulary.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _StateAllPageView extends State<AllPageView> {
               const Color(0x4EFF5252), "vocabulario.png"),
           animatedPaddingPage(context, "Verbos", const verbs(), 2,
               const Color.fromARGB(77, 68, 137, 255), "verbos.png"),
-          animatedPaddingPage(context, "Notas", const verbs(), 3,
+          animatedPaddingPage(context, "Notas",  ListApuntes(), 3,
               const Color(0x4B69F0AF), "notas.png"),
         ],
       ),

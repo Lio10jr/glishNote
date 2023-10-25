@@ -1,20 +1,19 @@
 import 'package:fastenglish/entity/ImgCamera.dart';
-import 'package:fastenglish/entity/UserServices.dart';
+import 'package:fastenglish/services/UserServices.dart';
+import 'package:fastenglish/services/vocabularioService.dart';
 import 'package:fastenglish/entity/VocabularyNote.dart';
 import 'package:fastenglish/entity/ApuntesTopic.dart';
 import 'package:flutter/material.dart';
 
-
-
 class AppState with ChangeNotifier {
-  List<VocabularyNote> _notas = [];
+  List<VocabularyNote> _vocabularioList = [];
   List<ApuntesTopic> _apuntes = [];
   List<ImgCamera> _ImgsCamera = [];
 
   
-  Future<bool> saveNotas(String s, String text, String text2, String text3) async {
+  Future<bool> saveVocabulario(String s, String text, String text2, String text3) async {
     try {
-      bool respuesta = await UserServices().saveNotas(s, text, text2, text3);
+      bool respuesta = await vocabularioService().saveVocabulario(s, text, text2, text3);
       if(respuesta) {
         notifyListeners();
       }
@@ -24,23 +23,37 @@ class AppState with ChangeNotifier {
     }
   }
 
-  Future<List<VocabularyNote>> obtenerNotas(String user) async{
+  Future<List<VocabularyNote>> obtenerVocabulario(String user) async{
     try{
-      _notas = await UserServices().getNotas(user);
-      return _notas;
+      _vocabularioList = await vocabularioService().getVocabulario(user);
+      return _vocabularioList;
     }catch (e){
-      return _notas;
+      return _vocabularioList;
     }
   }
 
-  Future<void> deleteNota(String key) async{
+  Future<void> deleteVocabulario(String key) async{
     try{
-      bool respuesta = await UserServices().eliminarNotas(key);
+      bool respuesta = await vocabularioService().eliminarVocabulario(key);
       if(respuesta) {
         notifyListeners();
       }
     }catch (e){
       print(e);
+    }
+  }
+
+  Future<bool> editVocabulario(String key, String user, String ingles, String spanish, String pronunciacion) async{
+    try{
+      
+      bool respuesta = await vocabularioService().editarVocabulario(key, user, ingles, spanish, pronunciacion);
+      if(respuesta) {
+        notifyListeners();
+      }
+      return respuesta;
+    }catch (e){
+      print(e);
+      return false;
     }
   }
 

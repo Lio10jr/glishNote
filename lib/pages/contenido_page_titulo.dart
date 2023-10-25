@@ -66,8 +66,8 @@ class _contenido_page_tituloState extends State<contenido_page_titulo> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                card(context, 'Nuevo Apunte', const add_note_page(), Icons.note_add),
-                card(context, 'Apuntes', ListApuntes(tema: widget.tema), Icons.view_headline_rounded),
+                card(context, 'Nueva Nota', const add_note_page(), Icons.note_add),
+                card(context, 'Notas', ListApuntes(), Icons.view_headline_rounded),
                 card(context, 'Verbos', const verbs(), Icons.view_list_rounded),
               ],
             ),

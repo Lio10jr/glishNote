@@ -1,65 +1,10 @@
 import 'package:fastenglish/entity/ApuntesTopic.dart';
 import 'package:fastenglish/entity/ImgCamera.dart';
-import 'package:fastenglish/entity/VocabularyNote.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class UserServices {
   
-  Future<List<VocabularyNote>> getNotas(String email) async {
-    List<VocabularyNote> list = []; 
-    try {
-      DatabaseReference ref = FirebaseDatabase.instance.ref();
-      final snapshot = await ref.child('VocabularyNote').get();
-      if (snapshot.exists) {
-        for(DataSnapshot sn in snapshot.children){    
-          if(email == sn.child('email').value.toString()){
-            VocabularyNote ovn = VocabularyNote(
-              key: sn.key.toString(),
-              user: sn.child('email').value.toString(),
-              espanish: sn.child('spanish').value.toString(),
-              ingles: sn.child('ingles').value.toString(),
-              pronunciacion: sn.child('pronunciacion').value.toString());
-              list.add(ovn);  
-          }  
-        }
-      } else {
-        print('Error al retornar la lista.');
-      }
-      return list;
-    } catch (e) {
-      return list;
-    }
-  }
-
-  Future<bool> saveNotas(String user, String ingles, String spanish, String pronunciacion) async {
-    try {
-      await FirebaseDatabase.instance.ref().child("VocabularyNote").push().set({
-        'email': user,
-        'ingles': ingles,
-        'spanish': spanish,
-        'pronunciacion': pronunciacion
-      });
-      return true;
-    } catch (e) {
-      print(e);
-      return false;
-    }
-  }
-
-  Future<bool> eliminarNotas(String key) async {
-    try {
-      await FirebaseDatabase.instance
-          .ref()
-          .child('VocabularyNote')
-          .child(key)
-          .remove();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
   Future<bool> saveApuntesTopic(String email, String tema, String contenido) async {
     try {
       String name = "Apuntes_Usuario";

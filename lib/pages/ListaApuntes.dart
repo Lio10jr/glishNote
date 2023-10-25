@@ -6,12 +6,11 @@ import 'package:fastenglish/services/appState.dart';
 import 'package:fastenglish/widgets/text_title.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class ListApuntes extends StatefulWidget {
-  String tema;
-  ListApuntes({Key? key, required this.tema}) : super(key: key);
+  ListApuntes({Key? key}) : super(key: key);
 
   @override
   _ListApuntesState createState() => _ListApuntesState();
@@ -21,7 +20,6 @@ class _ListApuntesState extends State<ListApuntes> {
   List<ApuntesTopic> listApuntes = [];
   TextEditingController textControlador = TextEditingController();
   TextEditingController textsubTemaControlador = TextEditingController();
-  final GlobalKey<FormState> _formularioKey = GlobalKey<FormState>();
   AppState? estadado;
   final user = FirebaseAuth.instance.currentUser!;
   List misApuntes = [];
