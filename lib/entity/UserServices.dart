@@ -62,7 +62,7 @@ class UserServices {
 
   Future<bool> saveApuntesTopic(String email, String tema, String contenido) async {
     try {
-      String name = "TopicNote/" + tema;
+      String name = "Apuntes_Usuario";
         
        await FirebaseDatabase.instance.ref().child(name).push().set({
           'Email': email,
@@ -76,9 +76,9 @@ class UserServices {
     }
   }
 
-  Future<List<ApuntesTopic>> getApuntesTopic(String email, topic) async {
+  Future<List<ApuntesTopic>> getApuntesTopic(String email) async {
     List<ApuntesTopic> listt = [];
-    String name = "TopicNote/" + topic;
+    String name = "Apuntes_Usuario";
     try{
       DataSnapshot sna =
           await FirebaseDatabase.instance.ref().child(name).get();
@@ -89,7 +89,6 @@ class UserServices {
             key: sn.key.toString(),
             email: sn.child('Email').value.toString(),
             tema: sn.child('Tema').value.toString(),
-            subTema: sn.child('SubTema').value.toString(),
             contenido: sn.child('Contenido').value.toString());
             listt.add(ovn);  
         }           
@@ -101,10 +100,10 @@ class UserServices {
     }
   }
 
-  Future<bool> editarNotas(String key,String tema,String subtema, String contenido) async{
+  Future<bool> editarNotas(String key,String tema, String contenido) async{
     try {
-      String name = "TopicNote/" + tema;
-      Map<String, String> value = {'SubTema': subtema, 'Contenido': contenido};
+      String name = "Apuntes_Usuario";
+      Map<String, String> value = {'Tema': tema, 'Contenido': contenido};
       await FirebaseDatabase.instance
           .ref()
           .child(name)
@@ -118,7 +117,7 @@ class UserServices {
 
   Future<bool> eliminarApuntes(String key, String email , String tema) async {
     try {
-      String name = "TopicNote/" + tema;
+      String name = "Apuntes_Usuario";
       await FirebaseDatabase.instance
           .ref()
           .child(name)

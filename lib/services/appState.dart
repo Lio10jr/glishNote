@@ -44,10 +44,10 @@ class AppState with ChangeNotifier {
     }
   }
 
-  Future<bool> editNota(String key, String tema, String subtema, String contenido) async{
+  Future<bool> editNota(String key, String tema, String contenido) async{
     try{
       
-      bool respuesta = await UserServices().editarNotas(key, tema, subtema, contenido);
+      bool respuesta = await UserServices().editarNotas(key, tema, contenido);
       if(respuesta) {
         notifyListeners();
       }
@@ -82,9 +82,9 @@ class AppState with ChangeNotifier {
     }
   }
 
-  Future<List<ApuntesTopic>> obtenerApuntes(String user, String tem) async{
+  Future<List<ApuntesTopic>> obtenerApuntes(String user) async{
     try{
-      _apuntes = await UserServices().getApuntesTopic(user, tem);
+      _apuntes = await UserServices().getApuntesTopic(user);
       return _apuntes;
     }catch (e){
       return _apuntes;

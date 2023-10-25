@@ -1,29 +1,41 @@
 import 'package:fastenglish/consts/colors.dart';
+import 'package:fastenglish/entity/ApuntesTopic.dart';
 import 'package:fastenglish/services/appState.dart';
 import 'package:fastenglish/widgets/text_title.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class add_note_page extends StatefulWidget {
-  const add_note_page();
+// ignore: must_be_immutable
+class edit_note_page extends StatefulWidget {
+  ApuntesTopic apuntes;
+  edit_note_page({Key? key, required this.apuntes}) : super(key: key);
 
   @override
-  State<add_note_page> createState() => _add_note_pageState();
+  State<edit_note_page> createState() => _edit_note_pageState();
 }
 
-class _add_note_pageState extends State<add_note_page> {
+class _edit_note_pageState extends State<edit_note_page> {
   TextEditingController textControlador = TextEditingController();
   TextEditingController textTemaControlador = TextEditingController();
   final GlobalKey<FormState> _formularioKey = GlobalKey<FormState>();
   final user = FirebaseAuth.instance.currentUser!;
 
   @override
+  void initState() {
+    super.initState();
+    setState(() {
+      textTemaControlador.text = widget.apuntes.tema;
+      textControlador.text = widget.apuntes.contenido;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(200.0),
@@ -31,31 +43,31 @@ class _add_note_pageState extends State<add_note_page> {
             alignment: Alignment.centerLeft,
             widthFactor: 0.85,
             child: Container(
-                padding:
-                    const EdgeInsets.only(left: 40, right: 20, top: 50, bottom: 50),
+                padding: const EdgeInsets.only(
+                    left: 40, right: 20, top: 50, bottom: 50),
                 child: text_title(
                     color: ColorsConsts.primarybackground,
                     size: 30,
                     fontw: FontWeight.w500,
-                    titulo: "Aquí puedes agregar una nueva nota")),
+                    titulo: "Aquí puedes corregir una nota")),
           ),
         ),
         body: Container(
           width: Size.infinite.width,
           height: Size.infinite.height,
           margin: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: Colors.purple, // Color del borde superior
-                  width: 1.5, // Grosor del borde
-                ),
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Colors.purple, // Color del borde superior
+                width: 1.5, // Grosor del borde
               ),
             ),
+          ),
           child: Form(
             key: _formularioKey,
-            child: Column(          
-              children: [              
+            child: Column(
+              children: [
                 Flexible(
                   child: Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
@@ -71,6 +83,7 @@ class _add_note_pageState extends State<add_note_page> {
                         if (date!.isEmpty) {
                           return "Este campo es requerido";
                         }
+                        return null;
                       },
                       keyboardType: TextInputType.multiline,
                       textCapitalization: TextCapitalization.sentences,
@@ -85,22 +98,22 @@ class _add_note_pageState extends State<add_note_page> {
                     height: 200,
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
-                    color: Colors.blue.shade200,
+                      color: Colors.blue.shade200,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     margin: const EdgeInsets.only(bottom: 30.0),
                     child: TextFormField(
                       controller: textControlador,
                       decoration: const InputDecoration(
-                        labelText: "Nota",
-                        hintText: "Escribe aqui tus notas",
-                        border: InputBorder.none
-                      ),
+                          labelText: "Nota",
+                          hintText: "Escribe aqui tus notas",
+                          border: InputBorder.none),
                       maxLines: null,
                       validator: (String? date) {
                         if (date!.isEmpty) {
                           return "Este campo es requerido";
                         }
+                        return null;
                       },
                       keyboardType: TextInputType.multiline,
                       textCapitalization: TextCapitalization.sentences,
@@ -130,7 +143,8 @@ class _add_note_pageState extends State<add_note_page> {
                           TextButton(
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.white,
-                              padding: const EdgeInsets.only(left: 20, right: 20),
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
                             ),
                             onPressed: () {
                               Navigator.pop(context);
@@ -139,7 +153,8 @@ class _add_note_pageState extends State<add_note_page> {
                                 content: Text("Proceso cancelado"),
                               ));
                               setState(() {
-                                textControlador.clear();
+                                textControlador.text = "";
+                                textTemaControlador.text = "";
                               });
                             },
                             child: text_title(
@@ -171,29 +186,34 @@ class _add_note_pageState extends State<add_note_page> {
                           TextButton(
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.white,
-                              padding: const EdgeInsets.only(left: 20, right: 20),
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
                             ),
                             onPressed: () async {
                               if (_formularioKey.currentState!.validate()) {
                                 Navigator.pop(context);
-                                bool result = await Provider.of<AppState>(context,
+                                bool result = await Provider.of<AppState>(
+                                        context,
                                         listen: false)
-                                    .saveApuntes(
-                                  user.email!,
+                                    .editNota(
+                                  widget.apuntes.key.toString(),
                                   textTemaControlador.text,
-                                  textControlador.text,
+                                  textControlador.text
                                 );
                                 if (result) {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content: const Text("Agregado correctamente"),
-                                    backgroundColor: ColorsConsts.msgValidbackground,
+                                    content:
+                                        const Text("Actualizado correctamente"),
+                                    backgroundColor:
+                                        ColorsConsts.msgValidbackground,
                                   ));
                                 } else {
                                   ScaffoldMessenger.of(context)
-                                      .showSnackBar( SnackBar(
+                                      .showSnackBar(SnackBar(
                                     content: const Text("Algo salio mal"),
-                                    backgroundColor: ColorsConsts.msgErrbackground,
+                                    backgroundColor:
+                                        ColorsConsts.msgErrbackground,
                                   ));
                                 }
                               }
