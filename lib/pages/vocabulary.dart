@@ -1,6 +1,5 @@
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/add_vocabulario_page.dart';
-import 'package:fastenglish/pages/edit_note_page.dart';
 import 'package:fastenglish/pages/edit_vocabulario_page.dart';
 import 'package:fastenglish/services/appState.dart';
 import 'package:fastenglish/widgets/text_title.dart';

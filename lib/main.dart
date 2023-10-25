@@ -4,6 +4,7 @@ import 'package:fastenglish/dark_theme_provider.dart';
 import 'package:fastenglish/entity/ContenidoPage.dart';
 import 'package:fastenglish/entity/ContenidoPageTitulo.dart';
 import 'package:fastenglish/entity/TopicE.dart';
+import 'package:fastenglish/entity/verbs_data_model.dart';
 import 'package:fastenglish/pages/login.dart';
 import 'package:fastenglish/pages/verbs.dart';
 import 'package:fastenglish/pages/verificarEmailPage.dart';
