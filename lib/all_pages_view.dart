@@ -30,7 +30,7 @@ class _StateAllPageView extends State<AllPageView> {
           });
         },
         children: [
-          animatedPaddingPage(context, "Contenidos", const Grammar(), 0,
+          animatedPaddingPage(context, "Contenidos", Grammar(), 0,
               const Color(0x49FFD640), "contenido.png"),
           animatedPaddingPage(context, "Vocabulario", const vocabulary(), 1,
               const Color(0x4EFF5252), "vocabulario.png"),

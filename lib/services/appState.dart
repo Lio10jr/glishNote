@@ -1,5 +1,7 @@
+import 'package:fastenglish/entity/CalificacionContenido.dart';
 import 'package:fastenglish/entity/ImgCamera.dart';
 import 'package:fastenglish/services/UserServices.dart';
+import 'package:fastenglish/services/valoracionService.dart';
 import 'package:fastenglish/services/vocabularioService.dart';
 import 'package:fastenglish/entity/VocabularyNote.dart';
 import 'package:fastenglish/entity/ApuntesTopic.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 
 class AppState with ChangeNotifier {
   List<VocabularyNote> _vocabularioList = [];
+  List<CalificacionContenido> _calificacionList = [];
   List<ApuntesTopic> _apuntes = [];
   List<ImgCamera> _ImgsCamera = [];
 
@@ -104,8 +107,6 @@ class AppState with ChangeNotifier {
     }
   }
 
-  
-
   Future<bool> saveImagenes( String email, String img,String imgurl, String fecha, String hora, String nota ) async {
     try {
       bool respuesta = await UserServices().saveImagenes(email, img, imgurl, fecha, hora, nota);
@@ -138,4 +139,27 @@ class AppState with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> saveCalificacionContenido(String text, String text2, double valor, String text3) async {
+    try {
+      bool respuesta = await valoracionService().saveValoracionContenido(text, text2, valor, text3);
+      if(respuesta) {
+        notifyListeners();
+      }
+      return respuesta;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<List<CalificacionContenido>> obtenerValoracionContenido(String user) async{
+    try{
+      _calificacionList = await valoracionService().getValoracionContenido(user);
+      return _calificacionList;
+    }catch (e){
+      return _calificacionList;
+    }
+  }
+
+
 }

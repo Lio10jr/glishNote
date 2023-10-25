@@ -1,8 +1,11 @@
 import 'package:fastenglish/consts/colors.dart';
+import 'package:fastenglish/entity/CalificacionContenido.dart';
 import 'package:fastenglish/entity/ContenidoPage.dart';
+import 'package:fastenglish/services/appState.dart';
 import 'package:fastenglish/widgets/text_title.dart';
 import 'package:fastenglish/pages/contenido_page_titulo.dart';
 import 'package:fastenglish/widgets/app_bar_icon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
@@ -14,6 +17,36 @@ class Grammar extends StatefulWidget {
 }
 
 class _grammarState extends State<Grammar> {
+  List<CalificacionContenido> list = [];
+  final user = FirebaseAuth.instance.currentUser!;
+  CalificacionContenido? contenidoo;
+
+  @override
+  initState() {
+    super.initState();
+    setState(() {
+      getData();
+    });
+  }
+
+  getData() async {
+    final contenido = await AppState().obtenerValoracionContenido(user.email!);
+
+    setState(() {
+      list = contenido;
+    });
+  }
+
+  CalificacionContenido? buscarPorTema(
+      List<CalificacionContenido> lista, String tema) {
+    try {
+      contenidoo = list.firstWhere((calificacion) => calificacion.tema == tema);
+      print(contenidoo);
+      return contenidoo;
+    } catch (e) {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +69,7 @@ class _grammarState extends State<Grammar> {
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       final temas = items[index];
+
                       return Stack(
                         children: [
                           Container(
@@ -104,7 +138,7 @@ class _grammarState extends State<Grammar> {
               context, MaterialPageRoute(builder: (context) => pagina));
         },
         child: SizedBox(
-          width: 250,
+          width: 300,
           height: 100,
           child: Row(
             children: [
@@ -114,6 +148,7 @@ class _grammarState extends State<Grammar> {
                       color: ColorsConsts.endColor, size: 80)),
               Container(
                 padding: const EdgeInsets.all(20.0),
+                alignment: Alignment.center,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -121,19 +156,16 @@ class _grammarState extends State<Grammar> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(tema),
-                        const Row(
+                        Text(tema, textAlign: TextAlign.end,),
+                        Row(
                           children: [
-                            Icon(Icons.star_rounded,
-                                color: Colors.yellow, size: 25),
-                            Icon(Icons.star_rounded,
-                                color: Colors.yellow, size: 25),
-                            Icon(Icons.star_rounded,
-                                color: Colors.yellow, size: 25),
-                            Icon(Icons.star_rounded,
-                                color: Colors.yellow, size: 25),
-                            Icon(Icons.star_rounded,
-                                color: Colors.yellow, size: 25),
+                            buscarPorTema(list, tema) != null
+                                ? 
+                                const Icon(Icons.star,
+                                      color: Colors.greenAccent, size: 25)
+                                : 
+                                  const Icon(Icons.star_border,
+                                      color: Colors.yellow, size: 25),
                           ],
                         ),
                       ],
