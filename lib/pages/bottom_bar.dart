@@ -1,7 +1,7 @@
 import 'package:fastenglish/Home.dart';
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/Camera.dart';
-import 'package:fastenglish/pages/Configuracion.dart';
+import 'package:fastenglish/pages/imagenes_recientes.dart';
 import 'package:fastenglish/pages/UserInfo.dart';
 import 'package:fastenglish/pages/pag_translation.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +29,10 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         'page': Camera(),
       },
       {
-        'page': UserInfo(),
+        'page': const ImagenesRecientes(),
       },
       {
-        'page': Configuracion(),
+        'page': UserInfo(),
       },
     ];
     super.initState();
@@ -56,7 +56,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             height: kBottomNavigationBarHeight * 0.98,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xFFD12391),
+                color: const Color(0xFFD12391),
                 border: Border(
                   top: BorderSide(
                     color: ColorsConsts.cartBadgeColor,
@@ -73,24 +73,24 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                 items: const [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
-                    label: 'Home',
+                    label: 'Inicio',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.translate),
-                    label: 'Translation',
+                    label: 'Traductor',
                   ),
                   BottomNavigationBarItem(
                     activeIcon: null,
                     icon: Icon(null),
-                    label: 'Camera',
+                    label: 'Camara',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.image),
+                    label: 'Imagenes',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.person),
-                    label: 'Profile',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
-                    label: 'Settings',
+                    label: 'Perfil',
                   ),
                 ],
               ),

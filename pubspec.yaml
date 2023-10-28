@@ -41,7 +41,6 @@ dependencies:
   get:
   firebase_auth: ^4.11.0
   firebase_core: ^2.18.0
-  cloud_firestore: ^4.10.0
   firebase_database: ^10.3.0
   email_validator: ^2.0.1
   provider: ^6.0.3
@@ -66,6 +65,7 @@ dependencies:
   permission_handler: ^11.0.1
   rating_dialog: ^2.0.4
   in_app_review: ^2.0.8
+  
   #Dependencia para leer archivo de excel
   #excel: ^1.1.5
 dev_dependencies:

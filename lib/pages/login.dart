@@ -81,22 +81,31 @@ class _StateLogin extends State<login> {
                           maxLines: 1,
                           cursorHeight: 20,
                           cursorColor: Colors.red,
-                          decoration: InputDecoration(                            
+                          decoration: InputDecoration(
                             labelText: "Correo",
-                            contentPadding: const EdgeInsets.only(left: 16.0, top: 5.0),
-                            labelStyle:
-                                const TextStyle(fontSize: 15.0, color: Colors.black,),
-                            suffixIcon:
-                                const Icon(Icons.email_outlined, color: Colors.purple),
+                            contentPadding:
+                                const EdgeInsets.only(left: 16.0, top: 5.0),
+                            labelStyle: const TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.black,
+                            ),
+                            suffixIcon: const Icon(Icons.email_outlined,
+                                color: Colors.purple),
                             border: InputBorder.none,
                             filled: true,
                             fillColor: Colors.amber[100],
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (email) =>
-                              email != null && !EmailValidator.validate(email)
+                          validator: (String? email) {
+                            if (email!.isEmpty && !EmailValidator.validate(email)) {
+                              return "Ingrese un Correo valido";
+                            }
+                            return null;
+                          }
+                          /* email != null && !EmailValidator.validate(email)
                                   ? 'Ingrese un Correo valido'
-                                  : null,
+                                  : null */
+                          ,
                         ),
                       ),
                       const SizedBox(
@@ -111,11 +120,12 @@ class _StateLogin extends State<login> {
                           cursorColor: Colors.red,
                           obscureText: true,
                           cursorHeight: 20,
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             labelText: "Contraseña",
-                            contentPadding: const EdgeInsets.only(left: 16.0, top: 5.0),
-                            labelStyle:
-                                const TextStyle(fontSize: 15.0, color: Colors.black),
+                            contentPadding:
+                                const EdgeInsets.only(left: 16.0, top: 5.0),
+                            labelStyle: const TextStyle(
+                                fontSize: 15.0, color: Colors.black),
                             suffixIcon: const Icon(Icons.lock_outline_rounded,
                                 color: Colors.purple),
                             border: InputBorder.none,
@@ -123,7 +133,6 @@ class _StateLogin extends State<login> {
                             fillColor: Colors.amber[100],
                           ),
                         ),
-                        
                       ),
                       const SizedBox(
                         height: 20,
@@ -157,7 +166,8 @@ class _StateLogin extends State<login> {
                       TextButton(
                         onPressed: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (context) => const RestablecerContra())),
+                                builder: (context) =>
+                                    const RestablecerContra())),
                         child: const Text(
                           "¿Olvidaste tu contraseña?",
                           style: TextStyle(
@@ -184,7 +194,7 @@ class _StateLogin extends State<login> {
                       Container(
                         margin: const EdgeInsets.only(top: 50),
                         child: const Row(
-                          children:  [
+                          children: [
                             Expanded(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -257,21 +267,20 @@ class _StateLogin extends State<login> {
     }
   }
 
-  Future _signFaceboock() async{
-    try{  
+  Future _signFaceboock() async {
+    try {
       final faceLogin = await FacebookAuth.instance.login();
       final userData = await FacebookAuth.instance.getUserData();
 
-      final facebookAuthCredential = FacebookAuthProvider.credential(faceLogin.accessToken!.token);
+      final facebookAuthCredential =
+          FacebookAuthProvider.credential(faceLogin.accessToken!.token);
       await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
-      
-      String userName= userData['name'].toString();
-      String email= userData['email'].toString();
-      String image= userData['picture']['data']['url'].toString();
-      userState().saveUsers(userName, email, image); 
-
-    }on FirebaseAuthException catch (e) {
+      String userName = userData['name'].toString();
+      String email = userData['email'].toString();
+      String image = userData['picture']['data']['url'].toString();
+      userState().saveUsers(userName, email, image);
+    } on FirebaseAuthException catch (e) {
       print(e.message.toString());
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
@@ -282,5 +291,4 @@ class _StateLogin extends State<login> {
       ));
     }
   }
-
 }

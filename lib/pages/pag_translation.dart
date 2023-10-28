@@ -1,11 +1,11 @@
+// ignore_for_file: unused_field
 import 'dart:async';
 import 'package:fastenglish/consts/colors.dart';
-import 'package:fastenglish/widgets/app_bar.dart';
+import 'package:fastenglish/widgets/titulo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:translator/translator.dart';
-import 'package:flutter/foundation.dart';
 import 'package:text_to_speech/text_to_speech.dart';
 import 'package:volume_controller/volume_controller.dart';
 
@@ -101,7 +101,6 @@ class _StatepagTranslation extends State<PageTranslation> {
 
   @override
   Widget build(BuildContext context) {
-    //final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -109,16 +108,21 @@ class _StatepagTranslation extends State<PageTranslation> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(100.0),
-          child: app_bar(title: "Traductor",)
+          preferredSize: Size.fromHeight(300.0),
+          child: titulo(tema: "Traductor"),
         ),
         body: Container(
-          margin: const EdgeInsets.only(right: 15, left: 15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              width: Size.infinite.width,
+          height: Size.infinite.height,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: Colors.purple,
+                  width: 1.5,
+                ),
+              ),
+            ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListView(

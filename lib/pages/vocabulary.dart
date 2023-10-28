@@ -2,7 +2,7 @@ import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/add_vocabulario_page.dart';
 import 'package:fastenglish/pages/edit_vocabulario_page.dart';
 import 'package:fastenglish/services/appState.dart';
-import 'package:fastenglish/widgets/text_title.dart';
+import 'package:fastenglish/widgets/titulo_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -43,37 +43,9 @@ class Statevocabulary extends State<vocabulary> {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(300.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                  width: 200,
-                  padding: const EdgeInsets.only(top: 50, bottom: 50),
-                  child: text_title(
-                      color: ColorsConsts.primarybackground,
-                      size: 30,
-                      fontw: FontWeight.w500,
-                      titulo: "Todo tu vocabulario esta aqui!")),
-              Ink(
-                decoration: ShapeDecoration(
-                  color: ColorsConsts.primarybackground,
-                  shape: const CircleBorder(),
-                ),
-                child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios_sharp,
-                      color: Colors.white,
-                      size: 30,
-                    )),
-              )
-            ],
-          ),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(300.0),
+          child: titulo_icon(titulo: "Todo tu vocabulario esta aqui!",),
         ),
         body: Stack(
           children: [

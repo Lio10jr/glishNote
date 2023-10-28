@@ -4,6 +4,7 @@ import 'package:fastenglish/pages/add_note_page.dart';
 import 'package:fastenglish/pages/edit_note_page.dart';
 import 'package:fastenglish/services/appState.dart';
 import 'package:fastenglish/widgets/text_title.dart';
+import 'package:fastenglish/widgets/titulo_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,37 +29,9 @@ class _ListApuntesState extends State<ListApuntes> {
   Widget build(BuildContext context) {
     estadado = Provider.of<AppState>(context, listen: true);
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(300.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Container(
-                width: 200,
-                padding: const EdgeInsets.only(top: 50, bottom: 50),
-                child: text_title(
-                    color: ColorsConsts.primarybackground,
-                    size: 30,
-                    fontw: FontWeight.w500,
-                    titulo: "Aquí puedes ver todas tus notas")),
-            Ink(
-              decoration: ShapeDecoration(
-                color: ColorsConsts.primarybackground,
-                shape: const CircleBorder(),
-              ),
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios_sharp,
-                    color: Colors.white,
-                    size: 30,
-                  )),
-            )
-          ],
-        ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(300.0),
+        child: titulo_icon(titulo: "Aquí puedes ver todas tus notas",),
       ),
       body: Container(
         padding: const EdgeInsets.only(bottom: 20),
@@ -66,8 +39,8 @@ class _ListApuntesState extends State<ListApuntes> {
         decoration: const BoxDecoration(
           border: Border(
             top: BorderSide(
-              color: Colors.purple, // Color del borde superior
-              width: 1.5, // Grosor del borde
+              color: Colors.purple,
+              width: 1.5,
             ),
           ),
         ),
@@ -79,7 +52,7 @@ class _ListApuntesState extends State<ListApuntes> {
               .then((value) => value),
           builder: (BuildContext context, AsyncSnapshot<List<ApuntesTopic>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text("Error: ${snapshot.error}");
             } else {

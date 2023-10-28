@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -55,8 +56,8 @@ class verificarEmailPageState extends State<verificarEmailPage> {
       } catch (e){
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(e.toString(),style: const TextStyle(color: Colors.red)),
-              backgroundColor: Colors.white,
+              content: Text(e.toString(),style: const TextStyle(color: Colors.white)),
+              backgroundColor: ColorsConsts.msgErrbackground,
             )
         );
       }

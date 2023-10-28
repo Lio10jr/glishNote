@@ -1,6 +1,7 @@
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/entity/verbs_data_model.dart';
 import 'package:fastenglish/widgets/text_title.dart';
+import 'package:fastenglish/widgets/titulo_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:fastenglish/main.dart';
 
@@ -26,70 +27,9 @@ class _MyHomePageState extends State<verbs> {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        /* appBar: AppBar(
-            backgroundColor: Colors.orange[900]?.withOpacity(0.9),
-            title: Container(
-              decoration: BoxDecoration(color: Colors.amber.shade200,
-              borderRadius: BorderRadius.circular(30)),
-              child: TextField(
-                onChanged: (value){
-                  setState(() {
-                    listSearch = listV.where(((element) => element.simpleForm!.toLowerCase().contains(value.toLowerCase())))
-                    .toList();
-                  });
-                },
-                controller: _textEditingController,
-                decoration:  InputDecoration(
-                    suffixIcon:  IconButton(
-                      icon:  const Icon(Icons.clear),
-                      onPressed: (){
-                        setState(() {
-                          _textEditingController!.clear();
-                        });
-                      },
-                    ),
-                  border: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  contentPadding: EdgeInsets.all(15),
-                  hintText: 'Search'
-                ),
-              ),
-            ),
-          ), */
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(300.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                  width: 200,
-                  padding: const EdgeInsets.only(top: 50, bottom: 50),
-                  child: text_title(
-                      color: ColorsConsts.primarybackground,
-                      size: 30,
-                      fontw: FontWeight.w500,
-                      titulo:
-                          "Aquí puedes ver una lista de Verbos que te ayudarán!")),
-              Ink(
-                decoration: ShapeDecoration(
-                  color: ColorsConsts.primarybackground,
-                  shape: const CircleBorder(),
-                ),
-                child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios_sharp,
-                      color: Colors.white,
-                      size: 30,
-                    )),
-              )
-            ],
-          ),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(300.0),
+          child: titulo_icon(titulo: "Aquí puedes ver una lista de Verbos que te ayudarán!",),
         ),
         body: Stack(children: [
           Container(

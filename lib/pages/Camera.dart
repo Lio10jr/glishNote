@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/text_scan.dart';
-import 'package:fastenglish/widgets/app_bar.dart';
+import 'package:fastenglish/widgets/titulo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class Camera extends StatefulWidget {
 }
 
 class _CameraState extends State<Camera> {
-  final user = FirebaseAuth.instance.currentUser!;  
+  final user = FirebaseAuth.instance.currentUser!;
   bool imgExits = false;
   late String url;
   String scannedText = "";
@@ -28,7 +28,7 @@ class _CameraState extends State<Camera> {
   File? _pickedImage;
   final picker = ImagePicker();
 
-@override
+  @override
   void initState() {
     super.initState();
     requestPermissions();
@@ -39,7 +39,8 @@ class _CameraState extends State<Camera> {
       Permission.storage,
       Permission.camera,
     ].request();
-    if (statuses[Permission.storage]!.isGranted && statuses[Permission.camera]!.isGranted) {
+    if (statuses[Permission.storage]!.isGranted &&
+        statuses[Permission.camera]!.isGranted) {
     } else {
       print('Permiso Denegado');
     }
@@ -49,54 +50,66 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(100.0),
-            child: app_bar(
-              title: "Camara",
-            )),
-        body: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.document_scanner_outlined,
-                    color: ColorsConsts.endColor,
-                  ),
-                  onPressed: () async {
-                    _pickGuardado();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => textScan(
-                                  texto: scannedText,
-                                )));
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.clear_all,
-                    color: Colors.red,
-                  ),
-                  onPressed: () {
-                    _pickImageRemove();
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                        "Imagen eliminada!",
-                        style: GoogleFonts.ubuntu(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
-                            color: ColorsConsts.white),
-                      ),
-                      backgroundColor: ColorsConsts.msgErrbackground,
-                    ));
-                  },
-                ),
-              ],
+          preferredSize: Size.fromHeight(300.0),
+          child: titulo(tema: "Camara "),
+        ),
+        body: Container(
+          width: Size.infinite.width,
+          height: Size.infinite.height,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Colors.purple,
+                width: 1.5,
+              ),
             ),
-            BacdgroundCamera(),
-          ],
-        ),        
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.document_scanner_outlined,
+                      color: ColorsConsts.endColor,
+                    ),
+                    onPressed: () async {
+                      _pickGuardado();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => textScan(
+                                    texto: scannedText,
+                                  )));
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.clear_all,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      _pickImageRemove();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                          "Imagen eliminada!",
+                          style: GoogleFonts.ubuntu(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                              color: ColorsConsts.white),
+                        ),
+                        backgroundColor: ColorsConsts.msgErrbackground,
+                      ));
+                    },
+                  ),
+                ],
+              ),
+              BacdgroundCamera(),
+            ],
+          ),
+        ),
         floatingActionButton: SpeedDial(
             animatedIcon: AnimatedIcons.menu_close,
             backgroundColor: ColorsConsts.primarybackground,
@@ -128,9 +141,13 @@ class _CameraState extends State<Camera> {
       );
     } else {
       return ClipRRect(
-              borderRadius: BorderRadius.circular(30.0),
-                child: Image.file(_pickedImage!, height: 400.0, width: 400.0, fit: BoxFit.contain,)
-            );      
+          borderRadius: BorderRadius.circular(30.0),
+          child: Image.file(
+            _pickedImage!,
+            height: 400.0,
+            width: 400.0,
+            fit: BoxFit.contain,
+          ));
     }
   }
 
@@ -145,7 +162,8 @@ class _CameraState extends State<Camera> {
   Future _pickGuardado() async {
     if (scannedText.isNotEmpty) {
       String imgName = generarNombreArchivoImg();
-      final firebaseStorageRef = FirebaseStorage.instance.ref().child('ImgCamera').child(imgName);
+      final firebaseStorageRef =
+          FirebaseStorage.instance.ref().child('ImgCamera').child(imgName);
       await firebaseStorageRef.putFile(_pickedImage!);
 
       final ref =
@@ -169,53 +187,55 @@ class _CameraState extends State<Camera> {
     final random = DateTime.now().microsecond.toString();
     return 'image_$timestamp$random.jpg';
   }
-  
+
   _imgFromGallery() async {
-      await  picker.pickImage(
-          source: ImageSource.gallery, imageQuality: 50
-      ).then((value){
-        if(value != null){
-          _cropImage(File(value.path));
-        }
-      });
-    }
+    await picker
+        .pickImage(source: ImageSource.gallery, imageQuality: 50)
+        .then((value) {
+      if (value != null) {
+        _cropImage(File(value.path));
+      }
+    });
+  }
 
   _imgFromCamera() async {
-      await picker.pickImage(
-          source: ImageSource.camera, imageQuality: 50
-      ).then((value){
-        if(value != null){
-          _cropImage(File(value.path));
-        }
-      });
-    }
+    await picker
+        .pickImage(source: ImageSource.camera, imageQuality: 50)
+        .then((value) {
+      if (value != null) {
+        _cropImage(File(value.path));
+      }
+    });
+  }
 
   _cropImage(File imgFile) async {
     final croppedFile = await ImageCropper().cropImage(
         sourcePath: imgFile.path,
         aspectRatioPresets: Platform.isAndroid
             ? [
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9
-        ] : [
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio5x3,
-          CropAspectRatioPreset.ratio5x4,
-          CropAspectRatioPreset.ratio7x5,
-          CropAspectRatioPreset.ratio16x9
-        ],
-        uiSettings: [AndroidUiSettings(
-            toolbarTitle: "Modificar",
-            toolbarColor: ColorsConsts.primarybackground,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: "Modificar",
+              toolbarColor: ColorsConsts.primarybackground,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
           IOSUiSettings(
             title: "Modificar",
           )
@@ -231,7 +251,7 @@ class _CameraState extends State<Camera> {
       // reload();
     }
   }
-  
+
   getRecognisedText(XFile imagen) async {
     final inputImagen = InputImage.fromFilePath(imagen.path);
     final textDetector = GoogleMlKit.vision.textRecognizer();

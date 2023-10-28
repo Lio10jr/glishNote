@@ -12,7 +12,6 @@ class AppState with ChangeNotifier {
   List<CalificacionContenido> _calificacionList = [];
   List<ApuntesTopic> _apuntes = [];
   List<ImgCamera> _ImgsCamera = [];
-
   
   Future<bool> saveVocabulario(String s, String text, String text2, String text3) async {
     try {

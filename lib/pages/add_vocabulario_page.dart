@@ -1,6 +1,7 @@
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/services/appState.dart';
 import 'package:fastenglish/widgets/text_title.dart';
+import 'package:fastenglish/widgets/titulo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,20 +29,9 @@ class _add_vocabulario_pageState extends State<add_vocabulario_page> {
           FocusScope.of(context).requestFocus(FocusNode());
         },
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(200.0),
-          child: FractionallySizedBox(
-            alignment: Alignment.centerLeft,
-            widthFactor: 0.85,
-            child: Container(
-                padding:
-                    const EdgeInsets.only(left: 40, right: 20, top: 50, bottom: 50),
-                child: text_title(
-                    color: ColorsConsts.primarybackground,
-                    size: 30,
-                    fontw: FontWeight.w500,
-                    titulo: "Agregar una nueva palabra a tu Vocabulario")),
-          ),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(200.0),
+          child: titulo(tema: "Agregar una nueva palabra a tu Vocabulario"),
         ),
         body: Container(
           width: Size.infinite.width,

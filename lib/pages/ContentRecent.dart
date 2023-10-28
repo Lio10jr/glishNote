@@ -1,5 +1,4 @@
 import 'package:fastenglish/entity/ImgCamera.dart';
-import 'package:fastenglish/pages/Camera.dart';
 import 'package:fastenglish/pages/text_scan.dart';
 import 'package:fastenglish/services/appState.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -71,9 +70,9 @@ class contentRecentState extends State<ContentRecent> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const[              
+            children: [              
                Text(
                 'Recientes',
                 style: TextStyle(

@@ -6,7 +6,6 @@ import 'package:fastenglish/entity/ContenidoPageTitulo.dart';
 import 'package:fastenglish/entity/TopicE.dart';
 import 'package:fastenglish/entity/verbs_data_model.dart';
 import 'package:fastenglish/pages/login.dart';
-import 'package:fastenglish/pages/verbs.dart';
 import 'package:fastenglish/pages/verificarEmailPage.dart';
 import 'package:fastenglish/services/appState.dart';
 import 'package:fastenglish/theme/dark_theme.dart';
@@ -22,10 +21,10 @@ main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseDatabase.instance.setPersistenceEnabled(true);
-  DatabaseReference refbase =
+  /* DatabaseReference refbase =
       FirebaseDatabase.instance.ref().child("VocabularyNote");
-  refbase.keepSynced(true);
-  runApp(const MyApp()); //home: login(),
+  refbase.keepSynced(true); */
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
