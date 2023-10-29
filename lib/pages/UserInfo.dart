@@ -40,6 +40,8 @@ class _UserInfoState extends State<UserInfo> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _light = prefs.getBool('isDarkMode') ?? false;
+      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme(_light);
     });
   }
 

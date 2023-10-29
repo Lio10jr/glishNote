@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/bottom_bar.dart';
+import 'package:fastenglish/widgets/titulo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -68,37 +69,53 @@ class verificarEmailPageState extends State<verificarEmailPage> {
       //? const PrincipalSession()
       ? BottomBarScreen()
       : Scaffold(
-        appBar: AppBar(
-          title: const Text('Verifique su correo'),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(300.0),
+          child: titulo(tema: "Verifica tu correo electrónico"),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Se ha enviado un correo de verificación a su email.',
-                style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,),
-              const SizedBox(height: 24,),
-              ElevatedButton.icon(
+        body: Container(
+          width: Size.infinite.width,
+          height: Size.infinite.height,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: Colors.purple,
+                  width: 1.5,
+                ),
+              ),
+            ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Se ha enviado un correo de verificación a su email.',
+                  style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,),
+                const SizedBox(height: 24,),
+                ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                      backgroundColor: ColorsConsts.primarybackground
+                    ),
+                    onPressed: canReenvioEmail ? sendVerificationEmail : null,
+                    icon: const Icon(Icons.email_outlined, size: 32,),
+                    label: const Text('Reenviar correo',
+                      style: TextStyle(fontSize: 24),),
+                ),
+                const SizedBox(height: 10,),
+                TextButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
+                    backgroundColor: ColorsConsts.endColor
                   ),
-                  onPressed: canReenvioEmail ? sendVerificationEmail : null,
-                  icon: const Icon(Icons.email_outlined, size: 32,),
-                  label: const Text('Reenviar correo',
-                    style: TextStyle(fontSize: 24),),
-              ),
-              const SizedBox(height: 10,),
-              TextButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(50),
-                ),
-                child: const Text("Cancelar", style: TextStyle(fontSize: 24),
-                ),
-                onPressed: () => FirebaseAuth.instance.signOut(),
-              )
-            ],
+                  child: const Text("Cancelar", style: TextStyle(fontSize: 24),
+                  ),
+                  onPressed: () => FirebaseAuth.instance.signOut(),
+                )
+              ],
+            ),
           ),
         ),
 

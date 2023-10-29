@@ -12,16 +12,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseDatabase.instance.setPersistenceEnabled(true);
-  /* DatabaseReference refbase =
-      FirebaseDatabase.instance.ref().child("VocabularyNote");
-  refbase.keepSynced(true); */
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isDarkMode = prefs.getBool('isDarkMode') ?? false;
+  
   runApp(ChangeNotifierProvider(
-      create: (context) => ThemeProvider(), child: const MyApp()));
+      create: (context) => ThemeProvider(isDarkMode), child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
