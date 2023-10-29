@@ -9,6 +9,7 @@ import 'package:fastenglish/main.dart';
 import 'package:fastenglish/widgets/titulo_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 
@@ -61,7 +62,7 @@ class _contenido_page_tituloState extends State<contenido_page_titulo> {
         ),
       ),
       message: const Text(
-        'Que te parecio el contenido explicado, calificanos y agrega un comentario.',
+        'Que te parecio el contenido explicado, calificanos y comentanos.',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 15),
       ),
@@ -80,8 +81,8 @@ class _contenido_page_tituloState extends State<contenido_page_titulo> {
         /*  print('rating: ${response.rating}, comment: ${response.comment}'); */
 
         bool result = await Provider.of<AppState>(context, listen: false)
-            .saveCalificacionContenido(user.email!, widget.tema,
-                response.rating, response.comment);
+            .saveCalificacionContenido(
+                user.email!, widget.tema, response.rating, response.comment);
         if (result) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: const Text("Gracias por comentarnos"),
@@ -105,7 +106,6 @@ class _contenido_page_tituloState extends State<contenido_page_titulo> {
 
   @override
   Widget build(BuildContext context) {
-    estadado = Provider.of<AppState>(context, listen: true);
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(300.0),
@@ -145,20 +145,20 @@ class _contenido_page_tituloState extends State<contenido_page_titulo> {
                 ),
                 Container(
                   padding: const EdgeInsets.all(10.0),
-                  child: const text_title(
-                      color: Colors.black,
-                      fontw: FontWeight.w800,
-                      size: 20,
-                      titulo: "Uso"),
+                  child: Text(
+                    "Uso",
+                    style: GoogleFonts.ubuntu(
+                        fontSize: 20, fontWeight: FontWeight.w800),
+                  ),
                 ),
                 Container(
                   padding:
                       const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                  child: text_title(
-                      color: Colors.black,
-                      fontw: FontWeight.w300,
-                      size: 15,
-                      titulo: objContenidoPageTitulo?.utilizacion ?? ""),
+                      child: Text(
+                    objContenidoPageTitulo?.utilizacion ?? "",
+                    style: GoogleFonts.ubuntu(
+                        fontSize: 15, fontWeight: FontWeight.w300),
+                  ),
                 ),
                 ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
@@ -248,8 +248,7 @@ class _contenido_page_tituloState extends State<contenido_page_titulo> {
                                               color: Colors.black,
                                               fontw: FontWeight.w300,
                                               size: 15,
-                                              titulo:
-                                                  ejemplos[indexExample]),
+                                              titulo: ejemplos[indexExample]),
                                         );
                                       })
                                 else
@@ -308,11 +307,11 @@ Card card(BuildContext context, String tema, Widget pagina, IconData icon) {
             Container(
                 padding: const EdgeInsets.all(5.0),
                 child: Icon(icon, color: ColorsConsts.endColor, size: 30)),
-            text_title(
-                color: Colors.black,
-                fontw: FontWeight.w500,
-                size: 10,
-                titulo: tema),
+            Text(
+              tema,
+              style:
+                  GoogleFonts.ubuntu(fontSize: 10, fontWeight: FontWeight.w500),
+            )
           ],
         ),
       ),

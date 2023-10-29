@@ -6,7 +6,6 @@ import 'package:fastenglish/widgets/titulo_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../entity/VocabularyNote.dart';
 
@@ -17,7 +16,7 @@ class vocabulary extends StatefulWidget {
   Statevocabulary createState() => Statevocabulary();
 }
 
-late List<VocabularyNote> dataVocabularyList = [];
+List<VocabularyNote> dataVocabularyList = [];
 
 class Statevocabulary extends State<vocabulary> {
   final int _currentSortColumn = 0;
@@ -25,7 +24,6 @@ class Statevocabulary extends State<vocabulary> {
   final TextEditingController _textBuscar = TextEditingController();
   final user = FirebaseAuth.instance.currentUser!;
   List misnotas = [];
-  AppState? estadado;
 
   //database
   late final dref = FirebaseDatabase.instance.ref();
@@ -37,7 +35,7 @@ class Statevocabulary extends State<vocabulary> {
 
   @override
   Widget build(BuildContext context) {
-    estadado = Provider.of<AppState>(context, listen: true);
+    
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -92,12 +90,11 @@ class Statevocabulary extends State<vocabulary> {
               margin: const EdgeInsets.only(top:80),
               padding:
                   const EdgeInsets.only(right: 10, left: 10),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(30),),
-                color: Colors.grey[200],
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(30),),
               ),
               child: FutureBuilder(
-                future: estadado!.obtenerVocabulario(user.email!),
+                future: AppState().obtenerVocabulario(user.email!),
                 builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
                   misnotas = snapshot.data ?? [];
                   return ListView(children: [
@@ -156,8 +153,9 @@ class Statevocabulary extends State<vocabulary> {
                                           color: ColorsConsts.primarybackground,
                                           size: 20,
                                         ),
-                                        onPressed: () {
-                                          estadado!.deleteVocabulario(nota.key);
+                                        onPressed: () async{
+                                          Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) => edit_vocabulario_page(objVocabulario: nota,)));
                                         },
                                       ),
                                     ),
@@ -170,8 +168,8 @@ class Statevocabulary extends State<vocabulary> {
                                           color: Colors.red.shade300,
                                           size: 20,
                                         ),
-                                        onPressed: () {
-                                          estadado!.deleteVocabulario(nota.key);
+                                        onPressed: () async {
+                                          await AppState().deleteVocabulario(nota.key);
                                         },
                                       ),
                                     ),
@@ -212,8 +210,8 @@ class Statevocabulary extends State<vocabulary> {
                                           color: Colors.red.shade300,
                                           size: 20,
                                         ),
-                                        onPressed: () {
-                                          estadado!.deleteVocabulario(nota.key);
+                                        onPressed: () async{
+                                          await AppState().deleteVocabulario(nota.key);
                                         },
                                       ),
                                     ),

@@ -108,7 +108,7 @@ class _grammarState extends State<Grammar> {
                                                 const NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
                                             padding: const EdgeInsets.only(
-                                                left: 25, right: 25),
+                                                left: 5, right: 5),
                                             itemCount: temas.subtitulos!.length,
                                             itemBuilder: (context, subIndex) {
                                               return card(

@@ -1,11 +1,11 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/RestablecerContra.dart';
 import 'package:fastenglish/pages/register.dart';
+import 'package:fastenglish/widgets/text_title.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
 
 import '../services/userState.dart';
 
@@ -17,21 +17,11 @@ class login extends StatefulWidget {
 class _StateLogin extends State<login> {
   final TextEditingController _textCorreoController = TextEditingController();
   final TextEditingController _textContraController = TextEditingController();
-  static const _backgroundColor = Color.fromARGB(197, 255, 255, 255);
-
-  static const _colors = [
-    Color(0x68F7069B),
-    Color(0x603A3DF5),
-  ];
-
-  static const _durations = [
-    5000,
-    4000,
-  ];
-
-  static const _heightPercentages = [
-    0.65,
-    0.66,
+  final _formKey = GlobalKey<FormState>();
+  final Color backColor = const Color(0x974711B2);
+  List<Color> listColorValidation = [
+    const Color(0x974711B2),
+    const Color(0x95B21139),
   ];
 
   @override
@@ -41,157 +31,178 @@ class _StateLogin extends State<login> {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        body: Stack(
-          children: [
-            WaveWidget(
-              config: CustomConfig(
-                colors: _colors,
-                durations: _durations,
-                heightPercentages: _heightPercentages,
-              ),
-              backgroundColor: _backgroundColor,
-              size: const Size(double.infinity, double.infinity),
-              waveAmplitude: 0,
-            ),
-            Container(
-              alignment: Alignment.center,
-              height: 50,
-              margin: const EdgeInsets.only(top: 100),
-              child: const Text(
-                "INICIAR SESSION",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(
-              height: 75,
-            ),
-            SingleChildScrollView(
-              child: Container(
-                width: Size.infinite.width * 0.5,
-                height: 500,
-                margin: const EdgeInsets.only(left: 40, right: 40, top: 200),
-                child: Form(
-                  child: Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          controller: _textCorreoController,
-                          maxLines: 1,
-                          cursorHeight: 20,
-                          cursorColor: Colors.red,
-                          decoration: InputDecoration(
-                            labelText: "Correo",
-                            contentPadding:
-                                const EdgeInsets.only(left: 16.0, top: 5.0),
-                            labelStyle: const TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.black,
+        body: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: <Color>[
+            Colors.white,
+            Color(0xFF4611B2),
+            Color(0xFF4611B2),
+          ], begin: Alignment(0.6, 0.8), end: Alignment(0.80, 0.80))),
+          child: SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 80, horizontal: 10),
+                      child: const text_title(
+                          size: 30,
+                          titulo: "INICIAR SESIÓN",
+                          fontw: FontWeight.w800,
+                          color: Colors.black),
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: const Color(0x974711B2),
+                                  border: Border.all(
+                                      color: const Color(0xffF0EDD4)),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: TextFormField(
+                                  controller: _textCorreoController,
+                                  maxLines: 1,
+                                  decoration: const InputDecoration(
+                                    labelText: "Correo",
+                                    labelStyle: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                    ),
+                                    suffixIcon: Icon(Icons.email_outlined,
+                                        color: Colors.white),
+                                    border: InputBorder.none,
+                                  ),
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Campo Obligatorio';
+                                    } else if (!EmailValidator.validate(
+                                        value)) {
+                                      return 'Ingrese un Correo valido';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
                             ),
-                            suffixIcon: const Icon(Icons.email_outlined,
-                                color: Colors.purple),
-                            border: InputBorder.none,
-                            filled: true,
-                            fillColor: Colors.amber[100],
                           ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (String? email) {
-                            if (email!.isEmpty && !EmailValidator.validate(email)) {
-                              return "Ingrese un Correo valido";
-                            }
-                            return null;
-                          }
-                          /* email != null && !EmailValidator.validate(email)
-                                  ? 'Ingrese un Correo valido'
-                                  : null */
-                          ,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                          controller: _textContraController,
-                          maxLines: 1,
-                          cursorColor: Colors.red,
-                          obscureText: true,
-                          cursorHeight: 20,
-                          decoration: InputDecoration(
-                            labelText: "Contraseña",
-                            contentPadding:
-                                const EdgeInsets.only(left: 16.0, top: 5.0),
-                            labelStyle: const TextStyle(
-                                fontSize: 15.0, color: Colors.black),
-                            suffixIcon: const Icon(Icons.lock_outline_rounded,
-                                color: Colors.purple),
-                            border: InputBorder.none,
-                            filled: true,
-                            fillColor: Colors.amber[100],
+                          const SizedBox(
+                            height: 20.0,
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "¿Aun no tienes una cuenta?, ",
-                            style: TextStyle(color: Colors.black, fontSize: 13),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: const Color(0x974711B2),
+                                  border: Border.all(
+                                      color: const Color(0xffF0EDD4)),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: TextFormField(
+                                  controller: _textContraController,
+                                  maxLines: 1,
+                                  obscureText: true,
+                                  decoration: const InputDecoration(
+                                    labelText: "Contraseña",
+                                    labelStyle: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                    ),
+                                    suffixIcon: Icon(Icons.lock_outline_rounded,
+                                        color: Colors.white),
+                                    border: InputBorder.none,
+                                  ),
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Campo Obligatorio';
+                                    } else if (value.length < 6) {
+                                      return 'Debe contener al menos 6 caracteres';
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "¿No tienes una cuenta?, ",
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 13),
+                              ),
+                              TextButton(
+                                onPressed: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const registerAuth()),
+                                  )
+                                },
+                                child: const Text(
+                                  "Registrate Aqui",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      decoration: TextDecoration.underline),
+                                ),
+                              ),
+                            ],
                           ),
                           TextButton(
-                            onPressed: () => {
-                              Navigator.push(
-                                context,
+                            onPressed: () => Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (context) => const registerAuth()),
-                              )
-                            },
+                                    builder: (context) =>
+                                        const RestablecerContra())),
                             child: const Text(
-                              "Registrate Aqui",
+                              "¿Olvidaste tu contraseña?",
                               style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  decoration: TextDecoration.underline),
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      TextButton(
-                        onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const RestablecerContra())),
-                        child: const Text(
-                          "¿Olvidaste tu contraseña?",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        //onPressed: () => Get.offAllNamed("/principalSession"),
-                        onPressed: signIn,
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.purple),
-                            fixedSize: MaterialStateProperty.all(
-                                const Size.fromWidth(150))),
-                        child: const Text("Ingresar"),
-                      ),
-                      Container(
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: signIn,
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.purple),
+                          fixedSize: MaterialStateProperty.all(
+                              const Size.fromWidth(150))),
+                      child: const Text("Ingresar"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Container(
                         margin: const EdgeInsets.only(top: 50),
                         child: const Row(
                           children: [
@@ -199,7 +210,7 @@ class _StateLogin extends State<login> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Divider(
-                                  color: Colors.white,
+                                  color: Color(0xFF4611B2),
                                   thickness: 2,
                                 ),
                               ),
@@ -209,7 +220,7 @@ class _StateLogin extends State<login> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Divider(
-                                  color: Colors.white,
+                                  color: Color(0xFF4611B2),
                                   thickness: 2,
                                 ),
                               ),
@@ -217,10 +228,13 @@ class _StateLogin extends State<login> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Container(
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Container(
                         width: Size.infinite.width,
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 22, 26, 248),
@@ -238,12 +252,12 @@ class _StateLogin extends State<login> {
                           onPressed: _signFaceboock,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -251,19 +265,29 @@ class _StateLogin extends State<login> {
 
   Future signIn() async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _textCorreoController.text.trim(),
-        password: _textContraController.text.trim(),
-      );
+      if (_formKey.currentState!.validate()) {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _textCorreoController.text.trim(),
+          password: _textContraController.text.trim(),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text(
+            "Credenciales incorrectas.",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: ColorsConsts.msgErrbackground,
+        ));
+      }
     } on FirebaseAuthException catch (e) {
       print(e);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          "Credenciales incorrectas.",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text(
+            "Error al iniciar sesión.",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: ColorsConsts.msgErrbackground,
+        ));
     }
   }
 

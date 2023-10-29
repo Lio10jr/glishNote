@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/entity/VocabularyNote.dart';
 import 'package:fastenglish/services/appState.dart';
@@ -41,7 +43,7 @@ class _edit_vocabulario_pageState extends State<edit_vocabulario_page> {
       },
       child: Scaffold(
         appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(200.0),
+          preferredSize: Size.fromHeight(300.0),
           child: titulo(tema: "Modifica una palabra tu Vocabulario"),
         ),
         body: Container(
@@ -51,8 +53,8 @@ class _edit_vocabulario_pageState extends State<edit_vocabulario_page> {
           decoration: const BoxDecoration(
             border: Border(
               top: BorderSide(
-                color: Colors.purple, // Color del borde superior
-                width: 1.5, // Grosor del borde
+                color: Colors.purple,
+                width: 1.5,
               ),
             ),
           ),
@@ -87,7 +89,6 @@ class _edit_vocabulario_pageState extends State<edit_vocabulario_page> {
                 Flexible(
                   child: Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    margin: const EdgeInsets.only(top: 25),
                     child: TextFormField(
                       controller: espa_text_controlador,
                       decoration: InputDecoration(

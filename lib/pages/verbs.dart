@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/entity/verbs_data_model.dart';
 import 'package:fastenglish/widgets/text_title.dart';
 import 'package:fastenglish/widgets/titulo_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:fastenglish/main.dart';
+import 'package:flutter/services.dart' as rootBundle;
+import 'package:google_fonts/google_fonts.dart';
 
 class verbs extends StatefulWidget {
   const verbs({Key? key}) : super(key: key);
@@ -17,8 +19,29 @@ String busVerb = "";
 class _MyHomePageState extends State<verbs> {
   late List<VerbsDateModel> listV;
   late List<VerbsDateModel> listSearch = [];
-
+  bool loading = true;
   final TextEditingController? _textEditingController = TextEditingController();
+  Future<List<VerbsDateModel>>? future;
+
+  Future<List<VerbsDateModel>> readJsonData() async {
+    final jsondata =
+        await rootBundle.rootBundle.loadString('assets/verbsList.json');
+    final list = json.decode(jsondata) as List<dynamic>;
+    return list.map((e) => VerbsDateModel.fromJson(e)).toList();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() {
+    setState(() {
+      future = readJsonData();
+      loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +52,9 @@ class _MyHomePageState extends State<verbs> {
       child: Scaffold(
         appBar: const PreferredSize(
           preferredSize: Size.fromHeight(300.0),
-          child: titulo_icon(titulo: "Aquí puedes ver una lista de Verbos que te ayudarán!",),
+          child: titulo_icon(
+            titulo: "Aquí puedes ver una lista de Verbos que te ayudarán!",
+          ),
         ),
         body: Stack(children: [
           Container(
@@ -64,7 +89,8 @@ class _MyHomePageState extends State<verbs> {
                         simplePast ||
                         thirdPerson ||
                         pastParticiple ||
-                        gerund || meaning;
+                        gerund ||
+                        meaning;
                   }).toList();
                 });
               },
@@ -88,14 +114,13 @@ class _MyHomePageState extends State<verbs> {
           Container(
             margin: const EdgeInsets.only(top: 80),
             padding: const EdgeInsets.only(right: 10, left: 10),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(
                 Radius.circular(30),
               ),
-              color: Colors.grey[200],
             ),
-            child: FutureBuilder(
-              future: readJsonData(),
+            child: loading == false ? FutureBuilder(
+              future: future,
               builder: (context, data) {
                 if (data.hasError) {
                   return Center(child: Text("${data.error}"));
@@ -148,27 +173,29 @@ class _MyHomePageState extends State<verbs> {
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5.0),
-                                            child: text_title(
-                                                color: ColorsConsts.black,
-                                                size: 12.0,
-                                                fontw: FontWeight.w800,
-                                                titulo: "Simple Past"),
+                                            child: Text(
+                                              "Simple Past",
+                                              style: GoogleFonts.ubuntu(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w800),
+                                            ),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5.0),
-                                            child: text_title(
-                                                color: ColorsConsts.black,
-                                                size: 12.0,
-                                                fontw: FontWeight.w300,
-                                                titulo: _textEditingController!
+                                            child: Text(
+                                                _textEditingController!
                                                         .text.isNotEmpty
                                                     ? listSearch[index]
                                                         .simplePast
                                                         .toString()
                                                     : listV[index]
                                                         .simplePast
-                                                        .toString()),
+                                                        .toString(),
+                                                style: GoogleFonts.ubuntu(
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w300)),
                                           ),
                                         ],
                                       ),
@@ -179,27 +206,29 @@ class _MyHomePageState extends State<verbs> {
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5.0),
-                                            child: text_title(
-                                                color: ColorsConsts.black,
-                                                size: 12.0,
-                                                fontw: FontWeight.w800,
-                                                titulo: "Third Person"),
+                                            child: Text(
+                                              "Third Person",
+                                              style: GoogleFonts.ubuntu(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w800),
+                                            ),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5.0),
-                                            child: text_title(
-                                                color: ColorsConsts.black,
-                                                size: 12.0,
-                                                fontw: FontWeight.w300,
-                                                titulo: _textEditingController!
+                                            child: Text(
+                                                _textEditingController!
                                                         .text.isNotEmpty
                                                     ? listSearch[index]
                                                         .thirdPerson
                                                         .toString()
                                                     : listV[index]
                                                         .thirdPerson
-                                                        .toString()),
+                                                        .toString(),
+                                                style: GoogleFonts.ubuntu(
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w300)),
                                           ),
                                         ],
                                       ),
@@ -210,27 +239,29 @@ class _MyHomePageState extends State<verbs> {
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5.0),
-                                            child: text_title(
-                                                color: ColorsConsts.black,
-                                                size: 12.0,
-                                                fontw: FontWeight.w800,
-                                                titulo: "Past Participle"),
+                                            child: Text(
+                                              "Past Participle",
+                                              style: GoogleFonts.ubuntu(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w800),
+                                            ),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5.0),
-                                            child: text_title(
-                                                color: ColorsConsts.black,
-                                                size: 12.0,
-                                                fontw: FontWeight.w300,
-                                                titulo: _textEditingController!
-                                                        .text.isNotEmpty
-                                                    ? listSearch[index]
-                                                        .pastParticiple
-                                                        .toString()
-                                                    : listV[index]
-                                                        .pastParticiple
-                                                        .toString()),
+                                            child: Text(
+                                              _textEditingController!
+                                                      .text.isNotEmpty
+                                                  ? listSearch[index]
+                                                      .pastParticiple
+                                                      .toString()
+                                                  : listV[index]
+                                                      .pastParticiple
+                                                      .toString(),
+                                              style: GoogleFonts.ubuntu(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w300),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -241,27 +272,29 @@ class _MyHomePageState extends State<verbs> {
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5.0),
-                                            child: text_title(
-                                                color: ColorsConsts.black,
-                                                size: 12.0,
-                                                fontw: FontWeight.w800,
-                                                titulo: "Gerund"),
+                                            child: Text(
+                                              "Gerund",
+                                              style: GoogleFonts.ubuntu(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w800),
+                                            ),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5.0),
-                                            child: text_title(
-                                                color: ColorsConsts.black,
-                                                size: 12.0,
-                                                fontw: FontWeight.w300,
-                                                titulo: _textEditingController!
-                                                        .text.isNotEmpty
-                                                    ? listSearch[index]
-                                                        .gerund
-                                                        .toString()
-                                                    : listV[index]
-                                                        .gerund
-                                                        .toString()),
+                                            child: Text(
+                                              _textEditingController!
+                                                      .text.isNotEmpty
+                                                  ? listSearch[index]
+                                                      .gerund
+                                                      .toString()
+                                                  : listV[index]
+                                                      .gerund
+                                                      .toString(),
+                                              style: GoogleFonts.ubuntu(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w300),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -279,7 +312,8 @@ class _MyHomePageState extends State<verbs> {
                   );
                 }
               },
-            ),
+            )
+            : const CircularProgressIndicator()
           ),
         ]),
       ),

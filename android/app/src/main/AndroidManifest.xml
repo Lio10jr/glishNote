@@ -1,11 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fastlearning.fastenglish">
+    package="com.fastlearning.fastenglish"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.CAMERA" />    
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>   
+        
    <application
         android:label="fastenglish"
         android:name="${applicationName}"
@@ -36,8 +38,11 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- Facebook Configuracion -->
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
    	    <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+        
         
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
@@ -54,10 +59,12 @@
             </intent-filter>
         </activity>
 
+
         <activity
            android:name="com.yalantis.ucrop.UCropActivity"
            android:screenOrientation="portrait"
            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
     </application>
     
     <uses-permission android:name="android.permission.INTERNET"/>

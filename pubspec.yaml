@@ -43,13 +43,13 @@ dependencies:
   firebase_core: ^2.18.0
   firebase_database: ^10.3.0
   email_validator: ^2.0.1
-  provider: ^6.0.3
+  provider:
   list_tile_switch:
   shared_preferences: ^2.0.15
   wave: ^0.2.2
   image: ^4.1.3
   image_picker: ^1.0.4
-  flutter_facebook_auth: ^5.0.11
+  flutter_facebook_auth:
   firebase_storage: ^11.3.0
   ionicons: ^0.2.2
   flutter_speed_dial: ^7.0.0

@@ -88,7 +88,7 @@ class _edit_note_pageState extends State<edit_note_page> {
                     height: 200,
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
-                      color: Colors.blue.shade200,
+                      color: ColorsConsts.primarybackground,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     margin: const EdgeInsets.only(bottom: 30.0),

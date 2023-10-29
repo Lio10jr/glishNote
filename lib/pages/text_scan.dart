@@ -67,8 +67,7 @@ class _textScanState extends State<textScan> {
                               widget.texto,
                               style: GoogleFonts.ubuntu(
                                   fontSize: 15,
-                                  fontWeight: FontWeight.w300,
-                                  color: ColorsConsts.black),
+                                  fontWeight: FontWeight.w300),
                             ),
                           ],
                         )

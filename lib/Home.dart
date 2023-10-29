@@ -132,7 +132,7 @@ class stateHomePageSession extends State<PrincipalSession> {
                               child: Text(
                                 title,
                                 style: GoogleFonts.ubuntu(
-                                    fontSize: 40,
+                                    fontSize: 35,
                                     fontWeight: FontWeight.bold,
                                     color: ColorsConsts.primarybackground),
                               ),

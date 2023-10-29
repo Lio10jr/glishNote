@@ -47,6 +47,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0x00FFFFFF),
         body: _pages[_selectedPageIndex]['page'],
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
@@ -66,7 +67,6 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               ),
               child: BottomNavigationBar(
                 onTap: _selectPage,
-                  backgroundColor: Theme.of(context).primaryColor,
                 unselectedItemColor: ColorsConsts.endColor,
                 selectedItemColor: ColorsConsts.primarybackground,
                 currentIndex: _selectedPageIndex,

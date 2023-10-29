@@ -112,17 +112,17 @@ class _StatepagTranslation extends State<PageTranslation> {
           child: titulo(tema: "Traductor"),
         ),
         body: Container(
-              width: Size.infinite.width,
+          width: Size.infinite.width,
           height: Size.infinite.height,
           margin: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: Colors.purple,
-                  width: 1.5,
-                ),
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Colors.purple,
+                width: 1.5,
               ),
             ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListView(
@@ -148,18 +148,14 @@ class _StatepagTranslation extends State<PageTranslation> {
                           onChanged: (String? newValue) {
                             setState(() {
                               combo = newValue!;
-                              if (combo.compareTo("Español") == 0) {
+                              if (combo == "Español") {
                                 idomaTranslation = "Ingles";
-                                /* language = 'en-GB'; */
-                                language = 'en-US';
-                                idiomE = "es";
-                                idiomS = "en";
-                              }
-                              if (combo.compareTo("Ingles") == 0) {
+                                idiomE = 'en';
+                                idiomS = 'es';
+                              } else if (combo == "Ingles") {
                                 idomaTranslation = "Español";
-                                language = 'es-ES';
-                                idiomE = "en";
-                                idiomS = "es";
+                                idiomE = 'es';
+                                idiomS = 'en';
                               }
                             });
                           },
@@ -174,8 +170,7 @@ class _StatepagTranslation extends State<PageTranslation> {
                         Text(
                           idomaTranslation,
                           style: GoogleFonts.ubuntu(
-                              fontWeight: FontWeight.w300,
-                              color: ColorsConsts.black),
+                              fontWeight: FontWeight.w300,),
                         ),
                       ],
                     ),
@@ -205,8 +200,7 @@ class _StatepagTranslation extends State<PageTranslation> {
                     scrollController: ScrollController(keepScrollOffset: false),
                     style: GoogleFonts.ubuntu(
                         fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black),
+                        fontWeight: FontWeight.w300),
                     controller: textContr,
                     onChanged: (val) async {
                       try {
@@ -246,8 +240,7 @@ class _StatepagTranslation extends State<PageTranslation> {
                         resulT,
                         style: GoogleFonts.ubuntu(
                             fontSize: 15,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black),
+                            fontWeight: FontWeight.w300),
                       ))),
                 ),
                 const SizedBox(
@@ -291,9 +284,7 @@ class _StatepagTranslation extends State<PageTranslation> {
   void speak() {
     tts.setVolume(volume);
     tts.setRate(rate);
-    if (languageCode != null) {
-      tts.setLanguage(languageCode!);
-    }
+    tts.setLanguage(languageCode!);
     tts.setPitch(pitch);
     tts.speak(text);
   }

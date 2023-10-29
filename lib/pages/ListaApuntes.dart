@@ -3,7 +3,6 @@ import 'package:fastenglish/entity/ApuntesTopic.dart';
 import 'package:fastenglish/pages/add_note_page.dart';
 import 'package:fastenglish/pages/edit_note_page.dart';
 import 'package:fastenglish/services/appState.dart';
-import 'package:fastenglish/widgets/text_title.dart';
 import 'package:fastenglish/widgets/titulo_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +20,11 @@ class _ListApuntesState extends State<ListApuntes> {
   List<ApuntesTopic> listApuntes = [];
   TextEditingController textControlador = TextEditingController();
   TextEditingController textsubTemaControlador = TextEditingController();
-  AppState? estadado;
   final user = FirebaseAuth.instance.currentUser!;
   List misApuntes = [];
 
   @override
   Widget build(BuildContext context) {
-    estadado = Provider.of<AppState>(context, listen: true);
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(300.0),
@@ -45,8 +42,7 @@ class _ListApuntesState extends State<ListApuntes> {
           ),
         ),
         child: FutureBuilder<List<ApuntesTopic>>(
-          future: estadado!
-              .obtenerApuntes(
+          future: AppState().obtenerApuntes(
                 user.email!,
               )
               .then((value) => value),
