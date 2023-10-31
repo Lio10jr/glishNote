@@ -5,7 +5,6 @@ import 'package:fastenglish/widgets/text_title.dart';
 import 'package:fastenglish/widgets/titulo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class edit_note_page extends StatefulWidget {
@@ -182,9 +181,7 @@ class _edit_note_pageState extends State<edit_note_page> {
                             onPressed: () async {
                               if (_formularioKey.currentState!.validate()) {
                                 Navigator.pop(context);
-                                bool result = await Provider.of<AppState>(
-                                        context,
-                                        listen: false)
+                                bool result = await AppState()
                                     .editNota(
                                   widget.apuntes.key.toString(),
                                   textTemaControlador.text,

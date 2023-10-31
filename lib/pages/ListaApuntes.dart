@@ -6,7 +6,6 @@ import 'package:fastenglish/services/appState.dart';
 import 'package:fastenglish/widgets/titulo_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class ListApuntes extends StatefulWidget {
@@ -68,7 +67,7 @@ class _ListApuntesState extends State<ListApuntes> {
                           )),
                       onDismissed: (direction) async {
                         bool resul =
-                            await Provider.of<AppState>(context, listen: false)
+                            await AppState()
                                 .deleteApuntes(apuntes.key.toString(),
                                     user.email!, apuntes.tema);
                         if (resul) {

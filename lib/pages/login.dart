@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:email_validator/email_validator.dart';
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/RestablecerContra.dart';
@@ -174,7 +176,7 @@ class _StateLogin extends State<login> {
                             onPressed: () => Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const RestablecerContra())),
+                                        RestablecerContra())),
                             child: const Text(
                               "¿Olvidaste tu contraseña?",
                               style: TextStyle(
@@ -279,8 +281,7 @@ class _StateLogin extends State<login> {
           backgroundColor: ColorsConsts.msgErrbackground,
         ));
       }
-    } on FirebaseAuthException catch (e) {
-      print(e);
+    } on FirebaseAuthException {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: const Text(
             "Error al iniciar sesión.",
@@ -304,8 +305,7 @@ class _StateLogin extends State<login> {
       String email = userData['email'].toString();
       String image = userData['picture']['data']['url'].toString();
       userState().saveUsers(userName, email, image);
-    } on FirebaseAuthException catch (e) {
-      print(e.message.toString());
+    } on FirebaseAuthException {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
           "Ocurrio un Error al iniciar con Facebook",

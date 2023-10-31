@@ -4,7 +4,6 @@ import 'package:fastenglish/widgets/text_title.dart';
 import 'package:fastenglish/widgets/titulo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class add_vocabulario_page extends StatefulWidget {
   const add_vocabulario_page();
@@ -193,9 +192,7 @@ class _add_vocabulario_pageState extends State<add_vocabulario_page> {
                                               .validate()) {
                                             Navigator.pop(context);
                                             bool result =
-                                                await Provider.of<AppState>(
-                                                        context,
-                                                        listen: false)
+                                                await AppState()
                                                     .saveVocabulario(
                                                         user.email!,
                                                         ingles_text_controlador.text,

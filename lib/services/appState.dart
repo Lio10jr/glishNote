@@ -40,8 +40,8 @@ class AppState with ChangeNotifier {
       if(respuesta) {
         notifyListeners();
       }
-    }catch (e){
-      print(e);
+    } catch (e) {
+      
     }
   }
 
@@ -54,7 +54,6 @@ class AppState with ChangeNotifier {
       }
       return respuesta;
     }catch (e){
-      print(e);
       return false;
     }
   }
@@ -68,7 +67,6 @@ class AppState with ChangeNotifier {
       }
       return respuesta;
     }catch (e){
-      print(e);
       return false;
     }
   }

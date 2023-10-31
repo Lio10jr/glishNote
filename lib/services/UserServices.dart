@@ -16,7 +16,6 @@ class UserServices {
         });
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }

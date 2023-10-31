@@ -42,7 +42,13 @@ class _CameraState extends State<Camera> {
     if (statuses[Permission.storage]!.isGranted &&
         statuses[Permission.camera]!.isGranted) {
     } else {
-      print('Permiso Denegado');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text(
+          "Permiso Denegado.",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: ColorsConsts.msgErrbackground,
+      ));
     }
   }
 

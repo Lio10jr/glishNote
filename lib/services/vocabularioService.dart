@@ -22,8 +22,6 @@ Future<List<VocabularyNote>> getVocabulario(String email) async {
               list.add(ovn);  
           }  
         }
-      } else {
-        print('Error al retornar la lista.');
       }
       return list;
     } catch (e) {
@@ -41,7 +39,6 @@ Future<bool> saveVocabulario(String user, String ingles, String spanish, String 
       });
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }

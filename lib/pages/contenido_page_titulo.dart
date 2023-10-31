@@ -10,7 +10,6 @@ import 'package:fastenglish/widgets/titulo_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 
 class contenido_page_titulo extends StatefulWidget {
@@ -78,9 +77,7 @@ class _contenido_page_tituloState extends State<contenido_page_titulo> {
         ));
       },
       onSubmitted: (response) async {
-        /*  print('rating: ${response.rating}, comment: ${response.comment}'); */
-
-        bool result = await Provider.of<AppState>(context, listen: false)
+        bool result = await AppState()
             .saveCalificacionContenido(
                 user.email!, widget.tema, response.rating, response.comment);
         if (result) {

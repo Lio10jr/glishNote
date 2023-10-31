@@ -4,7 +4,6 @@ import 'package:fastenglish/widgets/text_title.dart';
 import 'package:fastenglish/widgets/titulo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class add_note_page extends StatefulWidget {
   const add_note_page();
@@ -168,8 +167,7 @@ class _add_note_pageState extends State<add_note_page> {
                             onPressed: () async {
                               if (_formularioKey.currentState!.validate()) {
                                 Navigator.pop(context);
-                                bool result = await Provider.of<AppState>(context,
-                                        listen: false)
+                                bool result = await AppState()
                                     .saveApuntes(
                                   user.email!,
                                   textTemaControlador.text,

@@ -40,7 +40,6 @@ class valoracionService {
         });
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }

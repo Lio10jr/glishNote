@@ -7,7 +7,6 @@ import 'package:fastenglish/widgets/text_title.dart';
 import 'package:fastenglish/widgets/titulo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class edit_vocabulario_page extends StatefulWidget {
   final VocabularyNote objVocabulario;
@@ -208,9 +207,7 @@ class _edit_vocabulario_pageState extends State<edit_vocabulario_page> {
                               onPressed: () async {
                                 if (_formularioKey.currentState!.validate()) {
                                   Navigator.pop(context);
-                                  bool result = await Provider.of<AppState>(
-                                          context,
-                                          listen: false)
+                                  bool result = await AppState()
                                       .editVocabulario(
                                           widget.objVocabulario.key,
                                           user.email!,

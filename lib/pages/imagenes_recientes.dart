@@ -39,7 +39,13 @@ class _ImagenesRecientesState extends State<ImagenesRecientes> {
         });
       }
     } catch (e) {
-      print('A ocurrido un error al retornar la lista de imagenes.  $e');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text(
+          "A ocurrido un error al retornar la lista de imagenes.",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: ColorsConsts.msgErrbackground,
+      ));
     }
   }
 

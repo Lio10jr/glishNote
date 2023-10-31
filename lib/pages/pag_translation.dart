@@ -27,14 +27,20 @@ class _StatepagTranslation extends State<PageTranslation> {
   }
 
   defaultConfigVoice() async {
-  try {
-    await flutterTts.setLanguage('en-US');
-    await flutterTts.setSpeechRate(0.5);
-    await flutterTts.setPitch(1.0);
-  } catch (e) {
-    print('Error al configurar TTS: $e');
+    try {
+      await flutterTts.setLanguage('en-US');
+      await flutterTts.setSpeechRate(0.5);
+      await flutterTts.setPitch(1.0);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text(
+          "Error al configurar TTS.",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: ColorsConsts.msgErrbackground,
+      ));
+    }
   }
-}
 
   String combo = "Español";
   String idomaTranslation = "Ingles";
@@ -44,27 +50,33 @@ class _StatepagTranslation extends State<PageTranslation> {
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
   bool get isWindows => !kIsWeb && Platform.isWindows;
   bool get isWeb => kIsWeb;
-  
+
   var resulT = "";
   var translator = GoogleTranslator();
   String idiomE = 'es';
   String idiomS = 'en';
 
   Future<void> translateText() async {
-  final translator = GoogleTranslator();
-  try {
-    final translation = await translator.translate(
-      textContr.text,
-      from: selectedLanguage == 'en' ? 'en' : 'es',
-      to: selectedLanguage == 'en' ? 'es' : 'en',
-    );
-    setState(() {
-      resulT = translation.text;
-    });
-  } catch (e) {
-    print('Error de traducción: $e');
+    final translator = GoogleTranslator();
+    try {
+      final translation = await translator.translate(
+        textContr.text,
+        from: selectedLanguage == 'en' ? 'en' : 'es',
+        to: selectedLanguage == 'en' ? 'es' : 'en',
+      );
+      setState(() {
+        resulT = translation.text;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text(
+          "Error de traducción.",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: ColorsConsts.msgErrbackground,
+      ));
+    }
   }
-}
 
   Future<void> speakTranslatedText() async {
     await flutterTts.setLanguage(selectedLanguage == 'en' ? 'es-ES' : 'en-US');
@@ -72,14 +84,20 @@ class _StatepagTranslation extends State<PageTranslation> {
   }
 
   void updateVoiceSettings() async {
-  String languageCode = selectedLanguage == 'en' ? 'en-US' : 'es-ES';
-  try {
-    await flutterTts.setLanguage(languageCode);
-    // Ajusta otras configuraciones según sea necesario
-  } catch (e) {
-    print('Error al actualizar la configuración de voz: $e');
+    String languageCode = selectedLanguage == 'en' ? 'en-US' : 'es-ES';
+    try {
+      await flutterTts.setLanguage(languageCode);
+      // Ajusta otras configuraciones según sea necesario
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text(
+          "Error al actualizar la configuración de voz.",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: ColorsConsts.msgErrbackground,
+      ));
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +211,6 @@ class _StatepagTranslation extends State<PageTranslation> {
                           resulT = translation.text;
                         });
                       } catch (e) {
-                        print('error:' + e.toString());
                         setState(() {
                           resulT = '';
                         });
@@ -233,7 +250,6 @@ class _StatepagTranslation extends State<PageTranslation> {
                 const SizedBox(
                   width: 20,
                 ),
-                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

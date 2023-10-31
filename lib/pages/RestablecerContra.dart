@@ -1,11 +1,11 @@
-import 'dart:ui';
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RestablecerContra extends StatefulWidget{
-  const RestablecerContra({Key? key}) : super(key: key);
+  RestablecerContra({super.key});
 
   _RestablecerContraState createState() => _RestablecerContraState();
 }
@@ -88,13 +88,12 @@ class _RestablecerContraState  extends State<RestablecerContra> {
           )
       );
       Navigator.of(context).popUntil((route) => route.isFirst);
-    }on FirebaseAuthException catch(e){
-      print(e);
+    }on FirebaseAuthException {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text(
-                e.message.toString(),
-                style: const TextStyle(color: Colors.red)),
+                "A ocurrido un error de varificación de email",
+                style: TextStyle(color: Colors.red)),
             backgroundColor: Colors.white,
           )
       );

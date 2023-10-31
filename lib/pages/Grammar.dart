@@ -41,7 +41,6 @@ class _grammarState extends State<Grammar> {
       List<CalificacionContenido> lista, String tema) {
     try {
       contenidoo = list.firstWhere((calificacion) => calificacion.tema == tema);
-      print(contenidoo);
       return contenidoo;
     } catch (e) {
       return null;

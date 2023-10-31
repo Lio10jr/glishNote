@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:email_validator/email_validator.dart';
 import 'package:fastenglish/consts/colors.dart';
@@ -38,8 +40,14 @@ class stateregisterAuth extends State<registerAuth> {
         _pickedImage = pickedImageFile;
       });
       Navigator.pop(context);
-    } on PlatformException catch (e) {
-      print("Error al cargar la Imagen en: $e");
+    } on PlatformException {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text(
+          "Error al cargar la Imagen.",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: ColorsConsts.msgErrbackground,
+      ));
     }
   }
 
@@ -437,7 +445,6 @@ class stateregisterAuth extends State<registerAuth> {
                 style: TextStyle(color: Colors.white)),
             backgroundColor: ColorsConsts.msgValidbackground,
           ));
-          // ignore: use_build_context_synchronously
           Navigator.pop(context);
         }
       } else {
@@ -449,8 +456,7 @@ class stateregisterAuth extends State<registerAuth> {
           backgroundColor: ColorsConsts.msgErrbackground,
         ));
       }
-    } on FirebaseAuthException catch (e) {
-      print(e);
+    } on FirebaseAuthException {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text(
           "Error al crear la cuenta, intentelo nuevamente.",
