@@ -41,26 +41,25 @@ class _edit_note_pageState extends State<edit_note_page> {
           preferredSize: Size.fromHeight(200.0),
           child: titulo(tema: "Aquí puedes corregir una nota"),
         ),
-        body: Container(
-          width: Size.infinite.width,
-          height: Size.infinite.height,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          decoration: const BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                color: Colors.purple,
-                width: 1.5,
+        body: SingleChildScrollView(
+          physics: const ScrollPhysics(),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: Colors.purple,
+                  width: 1.5,
+                ),
               ),
             ),
-          ),
-          child: Form(
-            key: _formularioKey,
-            child: Column(
-              children: [
-                Flexible(
-                  child: Container(
+            child: Form(
+              key: _formularioKey,
+              child: Column(
+                children: [
+                  Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    margin: const EdgeInsets.only(top: 50),
+                    margin: const EdgeInsets.only(top: 25),
                     child: TextFormField(
                       controller: textTemaControlador,
                       decoration: const InputDecoration(
@@ -78,12 +77,10 @@ class _edit_note_pageState extends State<edit_note_page> {
                       textCapitalization: TextCapitalization.sentences,
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                Flexible(
-                  child: Container(
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Container(
                     height: 200,
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
@@ -108,115 +105,115 @@ class _edit_note_pageState extends State<edit_note_page> {
                       textCapitalization: TextCapitalization.sentences,
                     ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: Stack(
-                        children: <Widget>[
-                          Positioned.fill(
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: <Color>[
-                                    Color(0xFFA10D0D),
-                                    Color(0xFFD21919),
-                                    Color(0xFFF54242),
-                                  ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: Stack(
+                          children: <Widget>[
+                            Positioned.fill(
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: <Color>[
+                                      Color(0xFFA10D0D),
+                                      Color(0xFFD21919),
+                                      Color(0xFFF54242),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              padding:
-                                  const EdgeInsets.only(left: 20, right: 20),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("Proceso cancelado"),
-                              ));
-                              setState(() {
-                                textControlador.text = "";
-                                textTemaControlador.text = "";
-                              });
-                            },
-                            child: text_title(
-                                color: ColorsConsts.white,
-                                size: 15,
-                                fontw: FontWeight.w500,
-                                titulo: "Cancelar"),
-                          ),
-                        ],
-                      ),
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: Stack(
-                        children: <Widget>[
-                          Positioned.fill(
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: <Color>[
-                                    Color(0xFF0D47A1),
-                                    Color(0xFF1976D2),
-                                    Color(0xFF42A5F5),
-                                  ],
-                                ),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
                               ),
-                            ),
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              padding:
-                                  const EdgeInsets.only(left: 20, right: 20),
-                            ),
-                            onPressed: () async {
-                              if (_formularioKey.currentState!.validate()) {
+                              onPressed: () {
                                 Navigator.pop(context);
-                                bool result = await AppState()
-                                    .editNota(
-                                  widget.apuntes.key.toString(),
-                                  textTemaControlador.text,
-                                  textControlador.text
-                                );
-                                if (result) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content:
-                                        const Text("Actualizado correctamente"),
-                                    backgroundColor:
-                                        ColorsConsts.msgValidbackground,
-                                  ));
-                                } else {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: const Text("Algo salio mal"),
-                                    backgroundColor:
-                                        ColorsConsts.msgErrbackground,
-                                  ));
-                                }
-                              }
-                            },
-                            child: text_title(
-                                color: ColorsConsts.white,
-                                size: 15,
-                                fontw: FontWeight.w500,
-                                titulo: "Agregar"),
-                          ),
-                        ],
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text("Proceso cancelado"),
+                                ));
+                                setState(() {
+                                  textControlador.text = "";
+                                  textTemaControlador.text = "";
+                                });
+                              },
+                              child: text_title(
+                                  color: ColorsConsts.white,
+                                  size: 15,
+                                  fontw: FontWeight.w500,
+                                  titulo: "Cancelar"),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: Stack(
+                          children: <Widget>[
+                            Positioned.fill(
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: <Color>[
+                                      Color(0xFF0D47A1),
+                                      Color(0xFF1976D2),
+                                      Color(0xFF42A5F5),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                              ),
+                              onPressed: () async {
+                                if (_formularioKey.currentState!.validate()) {
+                                  Navigator.pop(context);
+                                  bool result = await AppState()
+                                      .editNota(
+                                    widget.apuntes.key.toString(),
+                                    textTemaControlador.text,
+                                    textControlador.text
+                                  );
+                                  if (result) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content:
+                                          const Text("Actualizado correctamente"),
+                                      backgroundColor:
+                                          ColorsConsts.msgValidbackground,
+                                    ));
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: const Text("Algo salio mal"),
+                                      backgroundColor:
+                                          ColorsConsts.msgErrbackground,
+                                    ));
+                                  }
+                                }
+                              },
+                              child: text_title(
+                                  color: ColorsConsts.white,
+                                  size: 15,
+                                  fontw: FontWeight.w500,
+                                  titulo: "Agregar"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

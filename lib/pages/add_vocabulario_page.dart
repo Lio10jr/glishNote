@@ -32,24 +32,23 @@ class _add_vocabulario_pageState extends State<add_vocabulario_page> {
           preferredSize: Size.fromHeight(200.0),
           child: titulo(tema: "Agregar una nueva palabra a tu Vocabulario"),
         ),
-        body: Container(
-          width: Size.infinite.width,
-          height: Size.infinite.height,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: Colors.purple, // Color del borde superior
-                  width: 1.5, // Grosor del borde
+        body: SingleChildScrollView(
+          physics: const ScrollPhysics(),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.purple, // Color del borde superior
+                    width: 1.5, // Grosor del borde
+                  ),
                 ),
               ),
-            ),
-          child: Form(
-            key: _formularioKey,
-            child: Column(          
-              children: [              
-                Flexible(
-                  child: Container(
+            child: Form(
+              key: _formularioKey,
+              child: Column(        
+                children: [              
+                  Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     margin: const EdgeInsets.only(top: 25),
                     child: TextFormField(
@@ -70,9 +69,7 @@ class _add_vocabulario_pageState extends State<add_vocabulario_page> {
                       textCapitalization: TextCapitalization.sentences,
                     ),
                   ),
-                ),
-                Flexible(
-                  child: Container(
+                  Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     margin: const EdgeInsets.only(top: 25),
                     child: TextFormField(
@@ -93,9 +90,7 @@ class _add_vocabulario_pageState extends State<add_vocabulario_page> {
                       textCapitalization: TextCapitalization.sentences,
                     ),
                   ),
-                ),
-                Flexible(
-                  child: Container(
+                  Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     margin: const EdgeInsets.only(top: 25),
                     child: TextFormField(
@@ -116,120 +111,120 @@ class _add_vocabulario_pageState extends State<add_vocabulario_page> {
                       textCapitalization: TextCapitalization.sentences,
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 150,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: Stack(
-                          children: <Widget>[
-                            Positioned.fill(
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: <Color>[
-                                      Color(0xFFA10D0D),
-                                      Color(0xFFD21919),
-                                      Color(0xFFF54242),
-                                    ],
+                  SizedBox(
+                    height: 150,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Stack(
+                            children: <Widget>[
+                              Positioned.fill(
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: <Color>[
+                                        Color(0xFFA10D0D),
+                                        Color(0xFFD21919),
+                                        Color(0xFFF54242),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.only(left: 20, right: 20),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.only(left: 20, right: 20),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content: Text("Proceso cancelado"),
+                                  ));
+                                  setState(() {
+                                    espa_text_controlador.text = "";
+                                    ingles_text_controlador.text = "";
+                                    pronun_text_controlador.text = "";
+                                  });
+                                },
+                                child: text_title(
+                                    color: ColorsConsts.white,
+                                    size: 15,
+                                    fontw: FontWeight.w500,
+                                    titulo: "Cancelar"),
                               ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                  content: Text("Proceso cancelado"),
-                                ));
-                                setState(() {
-                                  espa_text_controlador.text = "";
-                                  ingles_text_controlador.text = "";
-                                  pronun_text_controlador.text = "";
-                                });
-                              },
-                              child: text_title(
-                                  color: ColorsConsts.white,
-                                  size: 15,
-                                  fontw: FontWeight.w500,
-                                  titulo: "Cancelar"),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: Stack(
-                          children: <Widget>[
-                            Positioned.fill(
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: <Color>[
-                                      Color(0xFF0D47A1),
-                                      Color(0xFF1976D2),
-                                      Color(0xFF42A5F5),
-                                    ],
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Stack(
+                            children: <Widget>[
+                              Positioned.fill(
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: <Color>[
+                                        Color(0xFF0D47A1),
+                                        Color(0xFF1976D2),
+                                        Color(0xFF42A5F5),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.only(left: 20, right: 20),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.only(left: 20, right: 20),
+                                ),
+                                onPressed: () async {
+                                  if (_formularioKey.currentState!
+                                                .validate()) {
+                                              Navigator.pop(context);
+                                              bool result =
+                                                  await AppState()
+                                                      .saveVocabulario(
+                                                          user.email!,
+                                                          ingles_text_controlador.text,
+                                                          espa_text_controlador.text,
+                                                          pronun_text_controlador
+                                                              .text);
+                                              if (result) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                  content: const Text(
+                                                      "Agregado correctamente"),
+                                                  backgroundColor:
+                                                      ColorsConsts.msgValidbackground,
+                                                ));
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                  content: const Text("Algo salio mal"),
+                                                  backgroundColor: ColorsConsts.msgValidbackground,
+                                                ));
+                                              }
+                                            
+                                  }
+                                },
+                                child: text_title(
+                                    color: ColorsConsts.white,
+                                    size: 15,
+                                    fontw: FontWeight.w500,
+                                    titulo: "Agregar"),
                               ),
-                              onPressed: () async {
-                                if (_formularioKey.currentState!
-                                              .validate()) {
-                                            Navigator.pop(context);
-                                            bool result =
-                                                await AppState()
-                                                    .saveVocabulario(
-                                                        user.email!,
-                                                        ingles_text_controlador.text,
-                                                        espa_text_controlador.text,
-                                                        pronun_text_controlador
-                                                            .text);
-                                            if (result) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: const Text(
-                                                    "Agregado correctamente"),
-                                                backgroundColor:
-                                                    ColorsConsts.msgValidbackground,
-                                              ));
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: const Text("Algo salio mal"),
-                                                backgroundColor: ColorsConsts.msgValidbackground,
-                                              ));
-                                            }
-                                          
-                                }
-                              },
-                              child: text_title(
-                                  color: ColorsConsts.white,
-                                  size: 15,
-                                  fontw: FontWeight.w500,
-                                  titulo: "Agregar"),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

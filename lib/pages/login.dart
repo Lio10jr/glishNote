@@ -175,8 +175,7 @@ class _StateLogin extends State<login> {
                           TextButton(
                             onPressed: () => Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        RestablecerContra())),
+                                    builder: (context) => RestablecerContra())),
                             child: const Text(
                               "¿Olvidaste tu contraseña?",
                               style: TextStyle(
@@ -283,12 +282,12 @@ class _StateLogin extends State<login> {
       }
     } on FirebaseAuthException {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text(
-            "Error al iniciar sesión.",
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: ColorsConsts.msgErrbackground,
-        ));
+        content: const Text(
+          "Error al iniciar sesión.",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: ColorsConsts.msgErrbackground,
+      ));
     }
   }
 
@@ -297,18 +296,31 @@ class _StateLogin extends State<login> {
       final faceLogin = await FacebookAuth.instance.login();
       final userData = await FacebookAuth.instance.getUserData();
 
-      final facebookAuthCredential =
-          FacebookAuthProvider.credential(faceLogin.accessToken!.token);
-      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+      if (faceLogin.status == LoginStatus.success) {
 
-      String userName = userData['name'].toString();
-      String email = userData['email'].toString();
-      String image = userData['picture']['data']['url'].toString();
-      userState().saveUsers(userName, email, image);
-    } on FirebaseAuthException {
+        final facebookAuthCredential =
+            FacebookAuthProvider.credential(faceLogin.accessToken!.token);
+        await FirebaseAuth.instance
+            .signInWithCredential(facebookAuthCredential);
+
+        String userName = userData['name'].toString();
+        String email = userData['email'].toString();
+        String image = userData['picture']['data']['url'].toString();
+        userState().saveUsers(userName, email, image);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            "No se pudo iniciar sesion con Facebook",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+        ));
+      }
+    } catch (e) {
+      print("Error al iniciar sesión con Facebook: $e");
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-          "Ocurrio un Error al iniciar con Facebook",
+          "Ocurrió un error al iniciar sesión con Facebook",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.red,
