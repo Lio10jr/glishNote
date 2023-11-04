@@ -1,4 +1,5 @@
 import 'package:fastenglish/consts/colors.dart';
+import 'package:fastenglish/consts/shared_preferences.dart';
 import 'package:fastenglish/theme/theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -21,9 +22,9 @@ class _UserInfoState extends State<UserInfo> {
   String nigth = 'Activar ';
   final FirebaseAuth auth_ = FirebaseAuth.instance;
   String? uid;
-  String? _name;
+  String? name;
   String? email;
-  String? _userUrlImage;
+  String? userUrlImage;
   bool _light = false;
   @override
   void initState() {
@@ -40,8 +41,7 @@ class _UserInfoState extends State<UserInfo> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _light = prefs.getBool('isDarkMode') ?? false;
-      Provider.of<ThemeProvider>(context, listen: false)
-                          .toggleTheme(_light);
+      Provider.of<ThemeProvider>(context, listen: false).toggleTheme(_light);
     });
   }
 
@@ -51,18 +51,33 @@ class _UserInfoState extends State<UserInfo> {
   }
 
   void getData() async {
-    final DataSnapshot userDoc =
-        await FirebaseDatabase.instance.ref().child("Users").get();
-    setState(() {
-      for (DataSnapshot sn in userDoc.children) {
-        if (user.email == sn.child('Email').value) {
-          uid = sn.key.toString();
-          email = sn.child('Email').value.toString();
-          _name = sn.child('UserName').value.toString();
-          _userUrlImage = sn.child('ImagenUrl').value.toString();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (await shared_preferences().isValueExists('Email')) {
+      setState(() {
+        uid = prefs.getString('uid')!;
+        email = prefs.getString('Email')!;
+        name = prefs.getString('UserName')!;
+        userUrlImage = prefs.getString('ImagenUrl')!;
+      });
+    } else {
+      final DataSnapshot userDoc =
+          await FirebaseDatabase.instance.ref().child("Users").get();
+      setState(() {
+        for (DataSnapshot sn in userDoc.children) {
+          if (user.email == sn.child('Email').value) {
+            uid = sn.key.toString();
+            email = sn.child('Email').value.toString();
+            name = sn.child('UserName').value.toString();
+            userUrlImage = sn.child('ImagenUrl').value.toString();
+            prefs.setString('uid', sn.key.toString());
+            prefs.setString('Email', sn.child('Email').value.toString());
+            prefs.setString('UserName', sn.child('UserName').value.toString());
+            prefs.setString(
+                'ImagenUrl', sn.child('ImagenUrl').value.toString());
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   @override
@@ -113,8 +128,8 @@ class _UserInfoState extends State<UserInfo> {
                                       ],
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(_userUrlImage ??
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(userUrlImage ??
                                             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEpWWQrAJpIR6Xy7FhzhCT00vzSmT7xw9S2Q&usqp=CAU'),
                                       )),
                                 ),
@@ -122,7 +137,7 @@ class _UserInfoState extends State<UserInfo> {
                                   width: 12,
                                 ),
                                 Text(
-                                  _name ?? '',
+                                  name ?? '',
                                   style: GoogleFonts.ubuntu(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w300),
@@ -147,7 +162,7 @@ class _UserInfoState extends State<UserInfo> {
                 children: [
                   titles('Informacion de Usuario'),
                   userListTile(
-                      'Nombre de Usuario', _name ?? '', Icons.person, context),
+                      'Nombre de Usuario', name ?? '', Icons.person, context),
                   userListTile('E-mail', email ?? '', Icons.email, context),
                   titles('Configuración de Usuario'),
                   const Divider(
@@ -206,6 +221,10 @@ class _UserInfoState extends State<UserInfo> {
                                       TextButton(
                                         onPressed: () async {
                                           FirebaseAuth.instance.signOut();
+                                          final SharedPreferences prefs =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                          await prefs.clear();
                                           Navigator.pop(context, 'OK');
                                         },
                                         child: const Text(

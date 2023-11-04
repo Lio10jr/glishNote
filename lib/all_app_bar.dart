@@ -1,9 +1,11 @@
 import 'package:fastenglish/consts/colors.dart';
+import 'package:fastenglish/consts/shared_preferences.dart';
 import 'package:fastenglish/widgets/text_title.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class todoAppBarLog extends StatefulWidget {
   @override
@@ -29,18 +31,32 @@ class todoAppBarLogState extends State<todoAppBarLog> {
   }
 
   void getData() async {
-    final DataSnapshot userDoc =
-        await FirebaseDatabase.instance.ref().child("Users").get();
-    setState(() {
-      for (DataSnapshot sn in userDoc.children) {
-        if (user.email == sn.child('Email').value) {
-          uid = sn.key.toString();
-          email = sn.child('Email').value.toString();
-          name = sn.child('UserName').value.toString();
-          userUrlImage = sn.child('ImagenUrl').value.toString();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (await shared_preferences().isValueExists('Email')) {
+      setState(() {
+        uid = prefs.getString('uid')!;
+        email = prefs.getString('Email')!;
+        name = prefs.getString('UserName')!;
+        userUrlImage = prefs.getString('ImagenUrl')!;
+      });
+    } else {
+      final DataSnapshot userDoc =
+          await FirebaseDatabase.instance.ref().child("Users").get();
+      setState(() {
+        for (DataSnapshot sn in userDoc.children) {
+          if (user.email == sn.child('Email').value) {
+            uid = sn.key.toString();
+            email = sn.child('Email').value.toString();
+            name = sn.child('UserName').value.toString();
+            userUrlImage = sn.child('ImagenUrl').value.toString();
+            prefs.setString('uid', sn.key.toString());
+            prefs.setString('Email', sn.child('Email').value.toString());
+            prefs.setString('UserName', sn.child('UserName').value.toString());
+            prefs.setString('ImagenUrl', sn.child('ImagenUrl').value.toString());
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   @override
@@ -89,7 +105,8 @@ class todoAppBarLogState extends State<todoAppBarLog> {
                       height: 50,
                       child: CircleAvatar(
                         radius: 120,
-                        backgroundImage: AssetImage('assets/usuarioDefecto.jpg'),
+                        backgroundImage:
+                            AssetImage('assets/usuarioDefecto.jpg'),
                       ),
                     ),
             ],

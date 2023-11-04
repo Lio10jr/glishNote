@@ -417,19 +417,20 @@ class stateregisterAuth extends State<registerAuth> {
   }
 
   Future signUp() async {
-    try {
-      if (_formKey.currentState!.validate()) {
-        if (_pickedImage == null) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: const Text('La foto es requerida',
-                style: TextStyle(color: Colors.white)),
-            backgroundColor: ColorsConsts.msgErrbackground,
-          ));
-        } else {
+    if (_formKey.currentState!.validate()) {
+      if (_pickedImage == null) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('La foto es requerida',
+              style: TextStyle(color: Colors.white)),
+          backgroundColor: ColorsConsts.msgErrbackground,
+        ));
+      } else {
+        try {
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: _textCorreoController.text.trim(),
             password: _textContraController.text.trim(),
           );
+
           // ignore: prefer_interpolation_to_compose_strings
           String urlImagen = _textUsernameController.text + '.jpg';
           final ref = FirebaseStorage.instance
@@ -440,26 +441,33 @@ class stateregisterAuth extends State<registerAuth> {
           url = await ref.getDownloadURL();
           userState().saveUsers(
               _textUsernameController.text, _textCorreoController.text, url);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: const Text('Cuenta creada satisfactoriamente',
-                style: TextStyle(color: Colors.white)),
-            backgroundColor: ColorsConsts.msgValidbackground,
-          ));
           Navigator.pop(context);
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'weak-password') {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: const Text(
+                "La contraseña es demasiado debil.",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: ColorsConsts.msgErrbackground,
+            ));
+          } else if (e.code == 'email-already-in-use') {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: const Text(
+                "La cuenta ya existe para ese correo electrónico.",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: ColorsConsts.msgErrbackground,
+            ));
+          }
+        } catch (e) {
+          print(e);
         }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text(
-            "Todos los campos son requeridos.",
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: ColorsConsts.msgErrbackground,
-        ));
       }
-    } on FirebaseAuthException {
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text(
-          "Error al crear la cuenta, intentelo nuevamente.",
+          "Todos los campos son requeridos.",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: ColorsConsts.msgErrbackground,
