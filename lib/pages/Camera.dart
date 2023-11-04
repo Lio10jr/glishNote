@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:fastenglish/consts/colors.dart';
 import 'package:fastenglish/pages/text_scan.dart';
@@ -24,31 +26,158 @@ class _CameraState extends State<Camera> {
   bool imgExits = false;
   late String url;
   String scannedText = "";
-
+  bool statuCamera = false;
+  bool statuGallery = false;
   File? _pickedImage;
   final picker = ImagePicker();
+  ValueNotifier<bool> isDialOpen = ValueNotifier(false);
 
-  @override
-  void initState() {
-    super.initState();
-    requestPermissions();
+  Future<void> askCamaraAccess() async {
+    final status = await Permission.camera.request();
+
+    switch (status) {
+      case PermissionStatus.granted:
+        setState(() {
+          statuCamera = true;
+        });
+        break;
+      case PermissionStatus.denied:
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Permiso denegado'),
+              content: const Column(
+                children: [
+                  Text(
+                      'Debes conceder permiso de la camara para acceder a estas funciones.'),
+                  Text(
+                      'Si deseas concedernos el permiso, realizalo manualmente en los ajustes de la aplicación.')
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: Text('Cancelar', style: TextStyle(color: ColorsConsts.endColor),),
+                ),
+                TextButton(
+                  onPressed: () {
+                    openAppSettings();
+                    Navigator.pop(context, 'OK');
+                  },
+                  child: Text('Configuración', style: TextStyle(color: ColorsConsts.primarybackground),),
+                ),
+              ],
+            );
+          },
+        );
+        break;
+      case PermissionStatus.restricted:
+      case PermissionStatus.limited:
+      case PermissionStatus.provisional:
+      case PermissionStatus.permanentlyDenied:
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Permiso permanentemente denegado'),
+              content: const Text(
+                  'Has denegado permanentemente el acceso a la cámara. Debes habilitar el permiso en la configuración de la aplicación.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancelar', style: TextStyle(color: ColorsConsts.endColor),),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    openAppSettings();
+                  },
+                  child: Text('Configuración', style: TextStyle(color: ColorsConsts.primarybackground),),
+                ),
+              ],
+            );
+          },
+        );
+        break;
+    }
   }
 
-  void requestPermissions() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.storage,
-      Permission.camera,
-    ].request();
-    if (statuses[Permission.storage]!.isGranted &&
-        statuses[Permission.camera]!.isGranted) {
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text(
-          "Permiso Denegado.",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: ColorsConsts.msgErrbackground,
-      ));
+  Future<void> askAmacenamientoAccess() async {
+    final status = await Permission.storage.request();
+
+    switch (status) {
+      case PermissionStatus.granted:
+        setState(() {
+          statuGallery = true;
+        });
+        break;
+      case PermissionStatus.denied:
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Permiso denegado'),
+              content: const SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                        'Debes conceder permiso de almacenamiento para acceder a estas funciones.'),
+                    Text(
+                        'Si deseas concedernos el permiso, realizalo manualmente en los ajustes de la aplicación.')
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: Text('Cancelar', style: TextStyle(color: ColorsConsts.endColor),),
+                ),
+                TextButton(
+                  onPressed: () {
+                    openAppSettings();
+                    Navigator.pop(context, 'OK');
+                  },
+                  child: Text('Configuración', style: TextStyle(color: ColorsConsts.primarybackground),),
+                ),
+              ],
+            );
+          },
+        );
+        break;
+      case PermissionStatus.restricted:
+      case PermissionStatus.limited:
+      case PermissionStatus.provisional:
+      case PermissionStatus.permanentlyDenied:
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Permiso permanentemente denegado'),
+              content: const Text(
+                  'Has denegado permanentemente el acceso al almacenamiento. Debes habilitar el permiso en la configuración de la aplicación.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancelar', style: TextStyle(color: ColorsConsts.endColor),),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    openAppSettings();
+                  },
+                  child: Text('Configuración', style: TextStyle(color: ColorsConsts.primarybackground),),
+                ),
+              ],
+            );
+          },
+        );
+        break;
     }
   }
 
@@ -119,16 +248,32 @@ class _CameraState extends State<Camera> {
         floatingActionButton: SpeedDial(
             animatedIcon: AnimatedIcons.menu_close,
             backgroundColor: ColorsConsts.primarybackground,
-            closeManually: true,
+            openCloseDial: isDialOpen,
             children: [
               SpeedDialChild(
                   child: const Icon(Icons.camera_alt),
                   label: 'Camara',
-                  onTap: () => _imgFromCamera()),
+                  onTap: () {                    
+                    askCamaraAccess();
+                    if (statuCamera) {
+                      _imgFromCamera();
+                    }
+                    setState(() {
+                      isDialOpen.value = false;
+                    });
+                  }),
               SpeedDialChild(
                   child: const Icon(Icons.image),
                   label: 'Galeria',
-                  onTap: () => _imgFromGallery()),
+                  onTap: () {    
+                    askAmacenamientoAccess();                
+                    if (statuGallery) {
+                      _imgFromGallery();
+                    }
+                    setState(() {
+                      isDialOpen.value = false;
+                    });
+                  }),
             ]));
   }
 
